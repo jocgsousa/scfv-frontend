@@ -25,5 +25,6 @@ module.exports = {
     'react/state-in-constructor': 'off',
     'no-console': 'off',
     'no-alert': 'off',
+    'react/no-unused-state': 'off',
   },
 };

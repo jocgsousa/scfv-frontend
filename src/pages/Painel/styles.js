@@ -73,3 +73,32 @@ export const BoxItem = styled.div`
 export const BoxItemTitle = styled.h3`
   color: #333;
 `;
+
+export const ContainerLoader = styled.div`
+  margin: 0 auto;
+  margin-top: 200px;
+`;
+
+export const Ativos = styled.div`
+  width: 200px;
+  height: 25%;
+  background-color: #00cc99;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  color: #ffff;
+  font-size: 24px;
+  margin-top: 10px;
+`;
+
+export const Desativados = styled.div`
+  width: 200px;
+  height: 25%;
+  background-color: #ff9999;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  color: #ffff;
+  font-size: 24px;
+  margin-top: 10px;
+`;
