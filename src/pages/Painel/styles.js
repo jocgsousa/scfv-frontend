@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  flex-direction: row;
+  display: flex; /* establish flex container */
+  flex-direction: row; /* default value; can be omitted */
+  flex-wrap: nowrap; /* default value; can be omitted */
+  justify-content: space-between; /* switched from default (flex-start, see below) */
+  background-color: lightyellow;
 `;
 
 export const Header = styled.div`
@@ -13,11 +17,28 @@ export const Title = styled.h3`
 `;
 
 export const HeaderLeft = styled.div`
-  background: red;
-  max-width: 40%;
+  width: 20%;
+  height: 1000px;
+  border: 2px solid #014055;
+  background-color: #006699;
 `;
 
 export const HeaderRight = styled.div`
-  background: purple;
-  max-width: 40%;
+  width: 80%;
+  height: 1000px;
+  border: 2px solid #014055;
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Option = styled.button`
+  border: 1px solid #eee;
+  padding: 10px;
+  margin-top: 20px;
+  width: 80%;
+  border-radius: 10px;
 `;

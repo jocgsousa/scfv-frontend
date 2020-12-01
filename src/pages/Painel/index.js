@@ -1,23 +1,40 @@
 import React, { Component } from 'react';
 
-import { Container, Header, Title, HeaderLeft, HeaderRight } from './styles';
+import {
+  Container,
+  Header,
+  Title,
+  HeaderLeft,
+  HeaderRight,
+  ButtonGroup,
+  Option,
+} from './styles';
 
 export default class Painel extends Component {
   state = {};
 
   render() {
     return (
-      <Container>
+      <>
         <Header>
           <Title>SCFV - CRAS BELA VISTA</Title>
         </Header>
 
-        <br />
+        <Container>
+          <br />
 
-        <HeaderLeft>esquerda</HeaderLeft>
+          <HeaderLeft>
+            <ButtonGroup>
+              <Option>Inicio</Option>
+              <Option>Inicio</Option>
+              <Option>Inicio</Option>
+              <Option>Inicio</Option>
+            </ButtonGroup>
+          </HeaderLeft>
 
-        <HeaderRight>direita</HeaderRight>
-      </Container>
+          <HeaderRight>direita</HeaderRight>
+        </Container>
+      </>
     );
   }
 }
