@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background-color: #fff;
-  max-width: 50%;
+  max-width: 70%;
+  min-width: 60%;
   margin: 0 auto;
   margin-top: 10%;
   padding: 10px;
@@ -18,17 +18,22 @@ export const Form = styled.form`
   border-radius: 4px;
   flex-direction: column;
   height: 100%;
+  min-width: 70%;
+  max-width: 70%;
+  margin: 0 auto;
 `;
 
 export const Title = styled.h1`
-  font-size: 17px;
+  font-size: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
+  color: #fff;
 `;
 
 export const TitleInput = styled.span`
   font-size: 12px;
   color: #333;
+  color: #fff;
 `;
 
 export const Input = styled.input`

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
+import api from '../../services/api';
 
 import {
   Container,
@@ -13,8 +15,9 @@ import {
 export default class Main extends Component {
   state = {
     email: '',
-    senha: '',
+    password: '',
     loading: false,
+    redirect: false,
   };
 
   randleEmailInput = (e) => {
@@ -22,16 +25,35 @@ export default class Main extends Component {
   };
 
   randleSenhaInput = (e) => {
-    this.setState({ senha: e.target.value });
+    this.setState({ password: e.target.value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     this.setState({ loading: true });
+    const { email, password } = this.state;
+
+    try {
+      const response = await api.post('/session', {
+        email,
+        password,
+      });
+      alert('ok');
+      localStorage.setItem('username', response.data.user.name);
+      localStorage.setItem('token', response.data.token);
+
+      this.setState({ loading: false, redirect: true });
+    } catch (error) {
+      alert(error.response.data.error);
+      this.setState({ loading: false });
+    }
   };
 
   render() {
-    const { email, senha, loading } = this.state;
+    const { email, password, loading, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/painel" />;
+    }
     return (
       <Container>
         <center>
@@ -49,7 +71,7 @@ export default class Main extends Component {
           <Input
             type="password"
             onChange={(e) => this.randleSenhaInput(e)}
-            value={senha}
+            value={password}
           />
           <ButtonSubmit>
             {loading ? <ClipLoader size={20} color="#ffff" /> : 'Entrar'}
