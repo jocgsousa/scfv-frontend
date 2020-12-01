@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: row; /* default value; can be omitted */
   flex-wrap: nowrap; /* default value; can be omitted */
   justify-content: space-between; /* switched from default (flex-start, see below) */
-  background-color: #ffff;
+  background-color: lightyellow;
 `;
 
 export const Header = styled.div`
@@ -50,26 +50,4 @@ export const Option = styled.button`
     text-decoration: none;
     color: red;
   }
-`;
-export const BoxGroup = styled.div`
-  padding: 10px;
-  display: box;
-  flex-direction: row;
-`;
-
-export const BoxItem = styled.div`
-  border: 1px solid #eee;
-  border-radius: 4px;
-  box-shadow: 1px 5px 10px 2px #ccc;
-  width: 100%;
-  height: 300px;
-  padding: 20px;
-  margin-top: 10px;
-  background-color: #fff;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const BoxItemTitle = styled.h3`
-  color: #333;
 `;
