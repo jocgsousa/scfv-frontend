@@ -1,79 +1,149 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { HorizontalBar, Doughnut } from 'react-chartjs-2';
+import ClipLoader from 'react-spinners/ClipLoader';
 
+import api from '../../services/api';
 import {
-  Container,
   Header,
-  Title,
-  HeaderLeft,
-  HeaderRight,
-  ButtonGroup,
   Option,
-  BoxGroup,
-  BoxItem,
-  BoxItemTitle,
+  ContainerLoader,
+
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
 
-export default class Painel extends Component {
+export default class Register extends Component {
   state = {
     loading: false,
     username: '',
+    token: '',
+    charData: [],
+    ativos: 0,
+    desativados: 0,
+    autenticated: true,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const user = localStorage.getItem('username');
-    this.setState({ username: user });
+    const key = localStorage.getItem('token');
+
+    if (!key) {
+      this.setState({ autenticated: false });
+    }
+
+    this.setState({
+      username: user,
+      token: key,
+      loading: true,
+    });
+
+    try {
+      const response = await api.get('/alunos', {
+        headers: {
+          Authorization: `Bearer ${key}`,
+        },
+      });
+      this.setState({
+        loading: false,
+        ativos: response.data.alunosAtivados.count,
+        desativados: response.data.alunosDesativados.count,
+      });
+
+      const { ativos, desativados } = this.state;
+      // const total = ativos + desativados;
+      this.setState({
+        data: {
+          labels: [`Ativos: ${ativos}`, `Desativados: ${desativados}`],
+          datasets: [
+            {
+              label: 'Usuários cadastrados',
+              data: [`${ativos}`, `${desativados}`],
+              backgroundColor: ['purple', 'green'],
+            },
+          ],
+        },
+      });
+    } catch (error) {
+      console.log(error.response.data.error);
+    }
   }
 
+  calcPorCente = (x, y) => {
+    const divisao = x / y;
+    const cento = divisao * 100;
+    const result = cento;
+    console.log(Math.round(result));
+    return result;
+  };
+
   render() {
-    const { username } = this.state;
+    const { username, loading, autenticated, data } = this.state;
+
     return (
       <>
-        <Header>
-          <Title>SCFV - CRAS Bela Vista - {username}</Title>
-        </Header>
-
-        <Container>
-          <br />
-
-          <HeaderLeft>
-            <ButtonGroup>
+        {autenticated ? '' : <Redirect to="/" />}
+        <Header>SCFV - {username}</Header>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3">
               <Link to="/painel">
-                <Option>Início</Option>
+                <Option>Inicio</Option>
               </Link>
-
-              <Link to="/register">
-                <Option>Novo Cadastro</Option>
-              </Link>
-
               <Link to="/users">
                 <Option>Usuários</Option>
               </Link>
-
+              <Link to="/register">
+                <Option>Novo Registro</Option>
+              </Link>
               <Link to="/encaminhamentos">
                 <Option>Encaminhamentos</Option>
               </Link>
-            </ButtonGroup>
-          </HeaderLeft>
+            </div>
 
-          <HeaderRight>
-            <BoxGroup>
-              <BoxItem>
-                <BoxItemTitle>Usuários ativos no momento</BoxItemTitle>
-                <hr />
-              </BoxItem>
-              <BoxItem>
-                <BoxItemTitle>Usuários inativos do sistema</BoxItemTitle>
-                <hr />
-              </BoxItem>
-              <BoxItem>
-                <BoxItemTitle>Usuários encaminhados</BoxItemTitle>
-                <hr />
-              </BoxItem>
-            </BoxGroup>
-          </HeaderRight>
-        </Container>
+            <div className="col-md-9">
+              {loading ? (
+                <>
+                  <ContainerLoader>
+                    <center>
+                      <ClipLoader />
+                    </center>
+                  </ContainerLoader>
+                </>
+              ) : (
+                <>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <HorizontalBar
+                        data={data}
+                        options={{
+                          maintainAspectRatio: true,
+                          title: {
+                            display: true,
+                            text: 'Usuários registrados',
+                            fontSize: 25,
+                          },
+                        }}
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <Doughnut
+                        data={data}
+                        options={{
+                          maintainAspectRatio: true,
+                          title: {
+                            display: true,
+                            text: 'Índice',
+                            fontSize: 25,
+                          },
+                        }}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
       </>
     );
   }

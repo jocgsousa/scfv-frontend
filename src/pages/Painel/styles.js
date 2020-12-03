@@ -11,6 +11,8 @@ export const Container = styled.div`
 export const Header = styled.div`
   background-color: #014055;
   padding: 10px;
+  color: #fff;
+  width: 100%;
 `;
 export const Title = styled.h3`
   color: #ccc;
@@ -41,6 +43,7 @@ export const Option = styled.button`
   margin-top: 20px;
   width: 200px;
   border-radius: 10px;
+  margin: 10px;
 
   a {
     text-decoration: none;
@@ -53,8 +56,8 @@ export const Option = styled.button`
 `;
 export const BoxGroup = styled.div`
   padding: 10px;
-  display: box;
-  flex-direction: row;
+  flex: 1 1 auto;
+  flex-flow: column;
 `;
 
 export const BoxItem = styled.div`
@@ -77,33 +80,4 @@ export const BoxItemTitle = styled.h3`
 export const ContainerLoader = styled.div`
   margin: 0 auto;
   margin-top: 200px;
-`;
-
-export const Ativos = styled.div`
-  width: 200px;
-  height: 25%;
-  background-color: #00cc99;
-  border-radius: 4px;
-  align-items: center;
-  justify-content: center;
-  color: #ffff;
-  font-size: 24px;
-  margin-top: 10px;
-`;
-
-export const Desativados = styled.div`
-  width: 200px;
-  height: 25%;
-  background-color: #ff9999;
-  border-radius: 4px;
-  align-items: center;
-  justify-content: center;
-  color: #ffff;
-  font-size: 24px;
-  margin-top: 10px;
-`;
-
-export const Chart = styled.div`
-  width: 500px;
-  display: flex;
 `;
