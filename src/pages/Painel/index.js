@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-
+import { Bar, Pie } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
 import api from '../../services/api';
 import {
@@ -15,8 +15,7 @@ import {
   BoxItem,
   BoxItemTitle,
   ContainerLoader,
-  Ativos,
-  Desativados,
+  Chart,
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
 
@@ -25,7 +24,7 @@ export default class Painel extends Component {
     loading: false,
     username: '',
     token: '',
-    data: [],
+    charData: [],
     ativos: 0,
     desativados: 0,
     autenticated: true,
@@ -34,11 +33,16 @@ export default class Painel extends Component {
   async componentDidMount() {
     const user = localStorage.getItem('username');
     const key = localStorage.getItem('token');
-    console.log(key);
+
     if (!key) {
       this.setState({ autenticated: false });
     }
-    this.setState({ username: user, token: key, loading: true });
+
+    this.setState({
+      username: user,
+      token: key,
+      loading: true,
+    });
 
     try {
       const response = await api.get('/alunos', {
@@ -51,13 +55,36 @@ export default class Painel extends Component {
         ativos: response.data.alunosAtivados.count,
         desativados: response.data.alunosDesativados.count,
       });
+
+      const { ativos, desativados } = this.state;
+      // const total = ativos + desativados;
+      this.setState({
+        data: {
+          labels: [`Ativos: ${ativos}`, `Desativados: ${desativados}`],
+          datasets: [
+            {
+              label: 'Usuários cadastrados',
+              data: [`${ativos}`, `${desativados}`],
+              backgroundColor: ['purple', 'green'],
+            },
+          ],
+        },
+      });
     } catch (error) {
       console.log(error.response.data.error);
     }
   }
 
+  calcPorCente = (x, y) => {
+    const divisao = x / y;
+    const cento = divisao * 100;
+    const result = cento;
+    console.log(Math.round(result));
+    return result;
+  };
+
   render() {
-    const { username, loading, autenticated, ativos, desativados } = this.state;
+    const { username, loading, autenticated, data } = this.state;
 
     return (
       <>
@@ -102,16 +129,17 @@ export default class Painel extends Component {
                   <BoxItem>
                     <BoxItemTitle>Usuários ativos no momento</BoxItemTitle>
                     <hr />
-                    <Ativos>
-                      <center>
-                        Usuário ativos
-                        <br />
-                        {ativos}
-                      </center>
-                    </Ativos>
-                    <Desativados>
-                      <center>Usuários inativos {desativados}</center>
-                    </Desativados>
+                    <Chart>
+                      <Bar
+                        data={data}
+                        options={{ maintainAspectRatio: true }}
+                      />
+
+                      <Pie
+                        data={data}
+                        options={{ maintainAspectRatio: true }}
+                      />
+                    </Chart>
                   </BoxItem>
                   <BoxItem>
                     <BoxItemTitle>Usuários encaminhados</BoxItemTitle>

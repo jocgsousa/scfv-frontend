@@ -62,7 +62,7 @@ export const BoxItem = styled.div`
   border-radius: 4px;
   box-shadow: 1px 5px 10px 2px #ccc;
   width: 100%;
-  height: 300px;
+  height: 100%;
   padding: 20px;
   margin-top: 10px;
   background-color: #fff;
@@ -101,4 +101,9 @@ export const Desativados = styled.div`
   color: #ffff;
   font-size: 24px;
   margin-top: 10px;
+`;
+
+export const Chart = styled.div`
+  width: 500px;
+  display: flex;
 `;
