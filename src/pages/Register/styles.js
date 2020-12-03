@@ -81,3 +81,11 @@ export const ContainerLoader = styled.div`
   margin: 0 auto;
   margin-top: 200px;
 `;
+
+export const ButtonLogout = styled.button.attrs({
+  className: 'btn btn-sm btn-danger',
+})`
+  float: right;
+  position: relative;
+  bottom: 4px;
+`;

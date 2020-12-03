@@ -8,6 +8,7 @@ import {
   Header,
   Option,
   ContainerLoader,
+  ButtonLogout,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -82,7 +83,10 @@ export default class Users extends Component {
     return (
       <>
         {autenticated ? '' : <Redirect to="/" />}
-        <Header>SCFV - {username}</Header>
+        <Header>
+          SCFV - {username}
+          <ButtonLogout>SAIR</ButtonLogout>
+        </Header>
         <div className="container">
           <div className="row">
             <div className="col-md-3">
