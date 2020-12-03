@@ -9,6 +9,9 @@ import {
   Option,
   ContainerLoader,
   ButtonLogout,
+  Row,
+  Form,
+  Input,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -116,7 +119,7 @@ export default class Painel extends Component {
                 </>
               ) : (
                 <>
-                  <div className="row">
+                  <Row className="row">
                     <div className="col-md-6">
                       <HorizontalBar
                         data={data}
@@ -143,6 +146,12 @@ export default class Painel extends Component {
                         }}
                       />
                     </div>
+                  </Row>
+
+                  <div className="row">
+                    <Form>
+                      <Input placeholder="Informe aqui um nome" />
+                    </Form>
                   </div>
                 </>
               )}
