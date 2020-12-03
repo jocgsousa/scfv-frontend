@@ -70,7 +70,8 @@ export default class Register extends Component {
   }
 
   logoff = () => {
-    localStorage.removeItem('token', 'username');
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
     this.setState({ autenticated: false });
   };
 
