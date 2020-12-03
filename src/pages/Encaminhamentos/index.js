@@ -69,12 +69,9 @@ export default class Encaminhamentos extends Component {
     }
   }
 
-  calcPorCente = (x, y) => {
-    const divisao = x / y;
-    const cento = divisao * 100;
-    const result = cento;
-    console.log(Math.round(result));
-    return result;
+  logoff = () => {
+    localStorage.removeItem('token', 'username');
+    this.setState({ autenticated: false });
   };
 
   render() {
@@ -84,9 +81,12 @@ export default class Encaminhamentos extends Component {
       <>
         {autenticated ? '' : <Redirect to="/" />}
         <Header>
-          SCFV - {username} <ButtonLogout>SAIR</ButtonLogout>
+          SCFV - {username}
+          <ButtonLogout onClick={this.logoff}>SAIR</ButtonLogout>
         </Header>
-
+        <br />
+        <br />
+        <br />
         <div className="container">
           <div className="row">
             <div className="col-md-3">

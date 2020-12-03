@@ -38,7 +38,7 @@ export default class Main extends Component {
         email,
         password,
       });
-      alert('ok');
+
       localStorage.setItem('username', response.data.user.name);
       localStorage.setItem('token', response.data.token);
 

@@ -10,6 +10,9 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   align-self: center;
+  background-color: #fff;
+  box-shadow: 2px 4px 10px 4px #ccc;
+  height: 100%;
 `;
 
 export const Form = styled.form`
@@ -21,19 +24,20 @@ export const Form = styled.form`
   min-width: 70%;
   max-width: 70%;
   margin: 0 auto;
+  margin-bottom: 5%;
 `;
 
 export const Title = styled.h1`
   font-size: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
-  color: #fff;
+  color: #333;
 `;
 
 export const TitleInput = styled.span`
   font-size: 12px;
   color: #333;
-  color: #fff;
+  color: #333;
 `;
 
 export const Input = styled.input`
