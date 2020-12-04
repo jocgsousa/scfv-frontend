@@ -155,7 +155,7 @@ export default class Painel extends Component {
           <div className="row">
             <div className="col-md-3">
               <Link to="/painel">
-                <Option>Inicio</Option>
+                <Option>Painel</Option>
               </Link>
               <Link to="/users">
                 <Option>Usuários</Option>
