@@ -6,6 +6,7 @@ import Main from './pages/Main';
 import Painel from './pages/Painel';
 import Register from './pages/Register';
 import Users from './pages/Users';
+import Ficha from './pages/Ficha';
 import Encaminhamentos from './pages/Encaminhamentos';
 
 export default function Routes() {
@@ -15,7 +16,8 @@ export default function Routes() {
         <Route path="/" exact component={Main} />
         <Route path="/painel" component={Painel} />
         <Route path="/register" component={Register} />
-        <Route path="/users" component={Users} />
+        <Route path="/ficha/:users" component={Ficha} />
+        <Route path="/users/" component={Users} />
         <Route path="/encaminhamentos" component={Encaminhamentos} />
       </Switch>
     </BrowserRouter>

@@ -14,18 +14,19 @@ import {
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
 
-export default class Users extends Component {
+export default class Ficha extends Component {
   state = {
     loading: false,
     username: '',
     token: '',
     charData: [],
-    users: [],
-
+    user: [],
+    userKey: false,
     autenticated: true,
   };
 
   async componentDidMount() {
+    const { match } = this.props;
     const user = localStorage.getItem('username');
     const key = localStorage.getItem('token');
 
@@ -38,22 +39,24 @@ export default class Users extends Component {
       token: key,
       loading: true,
     });
-
-    // Se for recebido algum paramêtro de usuário realizar a pesquisa
-
-    try {
-      const response = await api.get(`/alunos`, {
-        headers: {
-          Authorization: `Bearer ${key}`,
-        },
-      });
-      this.setState({
-        loading: false,
-        users: response.data.alunosAtivados.rows,
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error.response.data.error);
+    const userId = decodeURIComponent(match.params.users);
+    if (userId) {
+      // Se for recebido algum paramêtro de usuário realizar a pesquisa
+      this.setState({ userKey: true });
+      try {
+        const response = await api.get(`/search/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${key}`,
+          },
+        });
+        this.setState({
+          loading: false,
+          user: response,
+        });
+        console.log(response);
+      } catch (error) {
+        console.log(error.response.data.error);
+      }
     }
   }
 
@@ -64,7 +67,7 @@ export default class Users extends Component {
   };
 
   render() {
-    const { username, loading, autenticated } = this.state;
+    const { username, loading, autenticated, user, userKey } = this.state;
 
     return (
       <>
@@ -105,7 +108,13 @@ export default class Users extends Component {
               ) : (
                 <>
                   <div className="row">
-                    <div className="col-md-12">Lista de usuários</div>
+                    {userKey ? (
+                      <div className="col-md-12">
+                        Ficha técnica - {user.name}
+                      </div>
+                    ) : (
+                      <div className="col-md-12">Lista de usuários</div>
+                    )}
                   </div>
                 </>
               )}
@@ -117,7 +126,7 @@ export default class Users extends Component {
   }
 }
 
-Users.propTypes = {
+Ficha.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       users: PropTypes.number,

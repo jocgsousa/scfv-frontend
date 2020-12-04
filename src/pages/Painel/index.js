@@ -89,7 +89,7 @@ export default class Painel extends Component {
 
   // Faz a busca dos usuários automaticamente
   handleSearch = async (string) => {
-    const { token, finds } = this.state;
+    const { token } = this.state;
     this.setState({ src: string.target.value });
     const response = await api.get('/alunos', {
       headers: {
@@ -101,8 +101,6 @@ export default class Painel extends Component {
       users: response.data.alunosAtivados.rows,
       finds: this.filterItems(),
     });
-
-    console.log(finds);
   };
 
   filterItems = () => {
@@ -222,9 +220,11 @@ export default class Painel extends Component {
                         {finds.map((item) => (
                           <Item key={item.id}>
                             {item.name}
-                            <ButtonOption className="badge bg-secondary">
-                              Abrir ficha
-                            </ButtonOption>
+                            <Link to={`/ficha/${encodeURIComponent(item.id)}`}>
+                              <ButtonOption className="badge bg-secondary">
+                                Abrir ficha
+                              </ButtonOption>
+                            </Link>
                           </Item>
                         ))}
                       </List>
