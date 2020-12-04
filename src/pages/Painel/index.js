@@ -12,6 +12,9 @@ import {
   Row,
   Form,
   Input,
+  List,
+  Item,
+  ButtonOption,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -21,12 +24,17 @@ export default class Painel extends Component {
     loading: false,
     username: '',
     token: '',
+    src: '',
+    users: [],
+    finds: [],
+    finded: false,
     charData: [],
     ativos: 0,
     desativados: 0,
     autenticated: true,
   };
 
+  // Renderiza os dados de usuários para os gráficos já pre estabelecidos
   async componentDidMount() {
     const user = localStorage.getItem('username');
     const key = localStorage.getItem('token');
@@ -72,20 +80,72 @@ export default class Painel extends Component {
     }
   }
 
+  // Remove do localStorage os dados de autenticação do usuário
   logoff = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     this.setState({ autenticated: false });
   };
 
+  // Faz a busca dos usuários automaticamente
+  handleSearch = async (string) => {
+    const { token, finds } = this.state;
+    this.setState({ src: string.target.value });
+    const response = await api.get('/alunos', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    this.setState({
+      users: response.data.alunosAtivados.rows,
+      finds: this.filterItems(),
+    });
+
+    console.log(finds);
+  };
+
+  filterItems = () => {
+    const { users, src } = this.state;
+    const alert = [
+      {
+        id: 0,
+        name: 'sem resultados',
+      },
+    ];
+
+    if (src !== '') {
+      const finds = users.filter(
+        (item) => item.name.toLowerCase().indexOf(src.toLowerCase()) > -1
+      );
+
+      if (finds.length <= 0) {
+        this.setState({ finded: false });
+      }
+      this.setState({ finded: true });
+      return finds;
+    }
+    this.setState({ finded: false });
+    return alert;
+  };
+
+  // Renderiza o conteúdo em tela para o usuário
   render() {
-    const { username, loading, autenticated, data } = this.state;
+    const {
+      username,
+      loading,
+      autenticated,
+      data,
+      src,
+      finds,
+      finded,
+    } = this.state;
 
     return (
       <>
         {autenticated ? '' : <Redirect to="/" />}
         <Header>
-          SCFV - {username}{' '}
+          SCFV - {username}
           <ButtonLogout onClick={this.logoff}>SAIR</ButtonLogout>
         </Header>
         <br />
@@ -130,6 +190,9 @@ export default class Painel extends Component {
                             text: 'Usuários registrados',
                             fontSize: 25,
                           },
+                          legend: {
+                            display: false,
+                          },
                         }}
                       />
                     </div>
@@ -150,8 +213,24 @@ export default class Painel extends Component {
 
                   <div className="row">
                     <Form>
-                      <Input placeholder="Informe aqui um nome" />
+                      <center>
+                        <Input onChange={this.handleSearch} value={src} />
+                      </center>
                     </Form>
+                    {finded ? (
+                      <List>
+                        {finds.map((item) => (
+                          <Item key={item.id}>
+                            {item.name}
+                            <ButtonOption className="badge bg-secondary">
+                              Abrir ficha
+                            </ButtonOption>
+                          </Item>
+                        ))}
+                      </List>
+                    ) : (
+                      ''
+                    )}
                   </div>
                 </>
               )}

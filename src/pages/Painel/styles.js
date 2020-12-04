@@ -56,10 +56,33 @@ export const ChartContainer = styled.div.attrs({
 export const Form = styled.form`
   border-radius: 4px;
   border: 1px solid #ccc;
-  padding: 80px;
+  padding: 10px;
   margin-top: 4px;
 `;
 
 export const Input = styled.input.attrs({
   className: 'form-control',
+  placeholder: 'Buscar usuário',
 })``;
+
+export const List = styled.ul`
+  border: 1px solid #ccc;
+  margin-top: 4px;
+  padding: 10px;
+`;
+
+export const Item = styled.li.attrs({
+  className: 'btn form-control',
+})`
+  list-style-type: none;
+  border: 1px solid #ccc;
+  margin-top: 1px;
+  width: 100%;
+`;
+
+export const ButtonOption = styled.button.attrs({
+  className: 'badge bg-secondary',
+})`
+  float: right;
+  border: 3px solid rgba(0, 153, 255, 0.5);
+`;
