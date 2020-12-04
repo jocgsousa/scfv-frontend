@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import { HorizontalBar, Doughnut } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -117,10 +117,10 @@ export default class Users extends Component {
   }
 }
 
-Users.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      users: PropTypes.number,
-    }),
-  }).isRequired,
-};
+// Users.propTypes = {
+//   match: PropTypes.shape({
+//     params: PropTypes.shape({
+//       users: PropTypes.number,
+//     }),
+//   }).isRequired,
+// };

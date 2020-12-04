@@ -21,7 +21,6 @@ export default class Ficha extends Component {
     token: '',
     charData: [],
     user: [],
-    userKey: false,
     autenticated: true,
   };
 
@@ -40,23 +39,22 @@ export default class Ficha extends Component {
       loading: true,
     });
     const userId = decodeURIComponent(match.params.users);
-    if (userId) {
-      // Se for recebido algum paramêtro de usuário realizar a pesquisa
-      this.setState({ userKey: true });
-      try {
-        const response = await api.get(`/search/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${key}`,
-          },
-        });
-        this.setState({
-          loading: false,
-          user: response,
-        });
-        console.log(response);
-      } catch (error) {
-        console.log(error.response.data.error);
-      }
+
+    try {
+      const response = await api.get(`/search/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${key}`,
+        },
+      });
+      this.setState({
+        loading: false,
+        user: response.data,
+      });
+      console.log(response.data);
+    } catch (error) {
+      alert('Usuário não existe ');
+      <Redirect to="/painel" />;
+      console.log(error.response.data.error);
     }
   }
 
@@ -67,7 +65,7 @@ export default class Ficha extends Component {
   };
 
   render() {
-    const { username, loading, autenticated, user, userKey } = this.state;
+    const { username, loading, autenticated, user } = this.state;
 
     return (
       <>
@@ -108,13 +106,7 @@ export default class Ficha extends Component {
               ) : (
                 <>
                   <div className="row">
-                    {userKey ? (
-                      <div className="col-md-12">
-                        Ficha técnica - {user.name}
-                      </div>
-                    ) : (
-                      <div className="col-md-12">Lista de usuários</div>
-                    )}
+                    <div className="col-md-12">Ficha técnica - {user.name}</div>
                   </div>
                 </>
               )}
