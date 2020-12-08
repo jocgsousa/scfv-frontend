@@ -38,6 +38,7 @@ export default class Ficha extends Component {
     // Dados de endereco
     loadingCreateAndress: false,
     loadingUpdateAndress: false,
+    loadingDeleteAndress: false,
     endereco: false,
     bairro: '',
     rua: '',
@@ -298,6 +299,35 @@ export default class Ficha extends Component {
     }
   };
 
+  deleteAndress = async (e) => {
+    this.setState({ loadingDeleteAndress: true });
+    e.preventDefault();
+    const { token, user } = this.state;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      await api.delete(`/endereco/${user.id}`, config);
+
+      this.setState({
+        loadingDeleteAndress: false,
+        endereco: false,
+        bairro: '',
+        rua: '',
+        cidade: '',
+        estado: '',
+        referencia: '',
+        numero: '',
+      });
+    } catch (error) {
+      this.setState({ loadingDeleteAndress: false });
+      alert('Erro ao deletar dados, por favor tente novamente mais tarde.');
+    }
+  };
+
   render() {
     const {
       username,
@@ -314,6 +344,7 @@ export default class Ficha extends Component {
       // dados de endereco
       loadingUpdateAndress,
       loadingCreateAndress,
+      loadingDeleteAndress,
       endereco,
       bairro,
       rua,
@@ -499,13 +530,23 @@ export default class Ficha extends Component {
                             </div>
                             <div className="col-md-12">
                               {endereco ? (
-                                <ButtonSubmit onClick={this.updateAndress}>
-                                  {loadingUpdateAndress ? (
-                                    <ClipLoader size={20} color="#FFFF" />
-                                  ) : (
-                                    'Atualizar Endereço'
-                                  )}
-                                </ButtonSubmit>
+                                <>
+                                  <ButtonSubmit onClick={this.updateAndress}>
+                                    {loadingUpdateAndress ? (
+                                      <ClipLoader size={20} color="#FFFF" />
+                                    ) : (
+                                      'Atualizar Endereço'
+                                    )}
+                                  </ButtonSubmit>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <ButtonSubmit onClick={this.deleteAndress}>
+                                    {loadingDeleteAndress ? (
+                                      <ClipLoader size={20} color="#FFFF" />
+                                    ) : (
+                                      'Excluir endereço'
+                                    )}
+                                  </ButtonSubmit>
+                                </>
                               ) : (
                                 <ButtonSubmit onClick={this.createAndress}>
                                   {loadingCreateAndress ? (
