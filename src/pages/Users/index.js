@@ -10,6 +10,11 @@ import {
   Option,
   ContainerLoader,
   ButtonLogout,
+  List,
+  Item,
+  Desativar,
+  Ficha,
+  Ativar,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -20,7 +25,10 @@ export default class Users extends Component {
     username: '',
     token: '',
     charData: [],
-    users: [],
+    ativos: [],
+    qdtAtivos: 0,
+    desativados: [],
+    qdtDesativados: 0,
 
     autenticated: true,
   };
@@ -49,7 +57,10 @@ export default class Users extends Component {
       });
       this.setState({
         loading: false,
-        users: response.data.alunosAtivados.rows,
+        ativos: response.data.alunosAtivados.rows,
+        qdtAtivos: response.data.alunosAtivados.count,
+        desativados: response.data.alunosDesativados.rows,
+        qdtDesativados: response.data.alunosDesativados.count,
       });
       console.log(response);
     } catch (error) {
@@ -63,8 +74,76 @@ export default class Users extends Component {
     this.setState({ autenticated: false });
   };
 
+  handleDesativa = async (id) => {
+    const { ativos, desativados, qdtAtivos, qdtDesativados } = this.state;
+    const key = localStorage.getItem('token');
+    const bearerToken = {
+      headers: {
+        Authorization: `Bearer ${key}`,
+      },
+    };
+
+    try {
+      // Desativa o aluno
+      await api.put(`/desativar/${id}`, {}, bearerToken);
+
+      // Listamos a nova lista de alunos e atualizamos todos os estados da renderização
+      const newAtivos = ativos.filter((user) => user.id !== id);
+      const newDesativado = ativos.find((user) => user.id === id);
+      const Increment = qdtDesativados + 1;
+      const Decrement = qdtAtivos - 1;
+      // Atualizando dados do state
+      this.setState({
+        ativos: newAtivos,
+        desativados: [...desativados, newDesativado],
+        qdtAtivos: Decrement,
+        qdtDesativados: Increment,
+      });
+    } catch (error) {
+      alert('Erro ao desativar aluno, tente novamente mais tarde.');
+    }
+  };
+
+  handleAtiva = async (id) => {
+    const { ativos, desativados, qdtAtivos, qdtDesativados } = this.state;
+    const key = localStorage.getItem('token');
+    const bearerToken = {
+      headers: {
+        Authorization: `Bearer ${key}`,
+      },
+    };
+
+    try {
+      // Desativa o aluno
+      await api.put(`/ativar/${id}`, {}, bearerToken);
+
+      // Listamos a nova lista de alunos e atualizamos todos os estados da renderização
+      const newDesativados = desativados.filter((user) => user.id !== id);
+      const desativado = desativados.find((user) => user.id === id);
+      const Increment = qdtAtivos + 1;
+      const Decrement = qdtDesativados - 1;
+      // Atualizando dados do state
+      this.setState({
+        ativos: [...ativos, desativado],
+        desativados: newDesativados,
+        qdtAtivos: Increment,
+        qdtDesativados: Decrement,
+      });
+    } catch (error) {
+      alert('Erro ao ativar aluno, tente novamente mais tarde.');
+    }
+  };
+
   render() {
-    const { username, loading, autenticated } = this.state;
+    const {
+      username,
+      loading,
+      autenticated,
+      ativos,
+      desativados,
+      qdtAtivos,
+      qdtDesativados,
+    } = this.state;
 
     return (
       <>
@@ -105,7 +184,45 @@ export default class Users extends Component {
               ) : (
                 <>
                   <div className="row">
-                    <div className="col-md-12">Lista de usuários</div>
+                    <div className="row">
+                      <strong className="form-control">
+                        ATIVOS:
+                        <span>{qdtAtivos}</span>
+                      </strong>
+                      <br />
+                      <List>
+                        {ativos.map((user) => (
+                          <Item key={user.id}>
+                            {user.name}
+                            <Desativar
+                              onClick={() => this.handleDesativa(user.id)}
+                            >
+                              Desativar
+                            </Desativar>
+                            <Link to={`/ficha/${encodeURIComponent(user.id)}`}>
+                              <Ficha> Abrir ficha</Ficha>
+                            </Link>
+                          </Item>
+                        ))}
+                      </List>
+                    </div>
+                    <div className="row">
+                      <strong className="form-control">
+                        DESATIVADOS:
+                        <span>{qdtDesativados}</span>
+                      </strong>
+                      <br />
+                      <List>
+                        {desativados.map((user) => (
+                          <Item>
+                            {user.name}{' '}
+                            <Ativar onClick={() => this.handleAtiva(user.id)}>
+                              Ativar
+                            </Ativar>
+                          </Item>
+                        ))}
+                      </List>
+                    </div>
                   </div>
                 </>
               )}

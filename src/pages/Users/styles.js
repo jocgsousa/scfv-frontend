@@ -89,3 +89,44 @@ export const ButtonLogout = styled.button.attrs({
   position: relative;
   bottom: 4px;
 `;
+
+export const List = styled.ul.attrs({
+  className: 'border list-group',
+})`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  list-style: none;
+  border-radius: 4px;
+  height: 300px;
+  overflow: auto;
+  padding: 4px;
+`;
+
+export const Item = styled.li.attrs({
+  className: 'border col-md-12',
+})``;
+
+export const Desativar = styled.button.attrs({
+  className: 'badge bg-danger',
+})`
+  float: right;
+  outline: none;
+  margin-left: 4px;
+  border: 1px solid red;
+`;
+
+export const Ficha = styled.button.attrs({
+  className: 'badge bg-secondary',
+})`
+  float: right;
+  outline: none;
+  border: 1px solid #ccc;
+`;
+
+export const Ativar = styled.button.attrs({
+  className: 'badge bg-success',
+})`
+  float: right;
+  outline: none;
+  border: 1px solid #ccc;
+`;
