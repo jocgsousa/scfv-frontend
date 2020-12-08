@@ -251,11 +251,10 @@ export default class Ficha extends Component {
     };
 
     try {
-      const response = await api.put(`/endereco/${user.id}`, object, config);
-      this.setState({ loadingCreateAndress: false });
-      console.log(response);
+      await api.put(`/endereco/${user.id}`, object, config);
+      this.setState({ loadingUpdateAndress: false });
     } catch (error) {
-      this.setState({ loadingCreateAndress: false });
+      this.setState({ loadingUpdateAndress: false });
       alert('Falha ao atualizar endereço, tente novamente mais tarde');
     }
   };
@@ -500,7 +499,7 @@ export default class Ficha extends Component {
                             </div>
                             <div className="col-md-12">
                               {endereco ? (
-                                <ButtonSubmit>
+                                <ButtonSubmit onClick={this.updateAndress}>
                                   {loadingUpdateAndress ? (
                                     <ClipLoader size={20} color="#FFFF" />
                                   ) : (
