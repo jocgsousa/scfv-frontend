@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { HorizontalBar, Doughnut } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -241,3 +242,7 @@ export default class Painel extends Component {
     );
   }
 }
+
+Painel.prototypes = {
+  data: PropTypes.object,
+};

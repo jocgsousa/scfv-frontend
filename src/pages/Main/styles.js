@@ -1,24 +1,23 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  max-width: 70%;
-  min-width: 60%;
+export const Container = styled.div.attrs({
+  className: 'container col-md-5',
+})`
+  padding: 10px;
   margin: 0 auto;
   margin-top: 10%;
-  padding: 10px;
-  height: 100%;
   align-items: center;
   justify-content: center;
   align-self: center;
-  background-color: #fff;
+  background: linear-gradient(#0066cc, #9198e5);
   box-shadow: 2px 4px 10px 4px #ccc;
   height: 100%;
+  border-radius: 4px;
 `;
 
 export const Form = styled.form`
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+
   flex-direction: column;
   height: 100%;
   min-width: 70%;
@@ -31,13 +30,12 @@ export const Title = styled.h1`
   font-size: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
-  color: #333;
+  color: #fff;
 `;
 
 export const TitleInput = styled.span`
   font-size: 12px;
-  color: #333;
-  color: #333;
+  color: #ffff;
 `;
 
 export const Input = styled.input`

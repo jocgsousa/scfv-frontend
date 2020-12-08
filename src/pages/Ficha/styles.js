@@ -89,3 +89,21 @@ export const ButtonLogout = styled.button.attrs({
   position: relative;
   bottom: 4px;
 `;
+
+export const ContainerUser = styled.div.attrs({
+  className: 'col-md-5',
+})``;
+
+export const Op = styled.option``;
+
+export const ButtonSubmit = styled.button`
+  margin-top: 14px;
+  margin-bottom: 14px;
+  border-radius: 4px;
+  width: 200px;
+  height: 40px;
+  background-color: #7159c1;
+  border: 1px solid blue;
+  color: white;
+  outline: none;
+`;

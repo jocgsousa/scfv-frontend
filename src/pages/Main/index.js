@@ -30,22 +30,27 @@ export default class Main extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    this.setState({ loading: true });
+
     const { email, password } = this.state;
+    if (email.length > 0 && password.length > 0) {
+      this.setState({ loading: true });
+      try {
+        const response = await api.post('/session', {
+          email,
+          password,
+        });
 
-    try {
-      const response = await api.post('/session', {
-        email,
-        password,
-      });
+        localStorage.setItem('username', response.data.user.name);
+        localStorage.setItem('token', response.data.token);
 
-      localStorage.setItem('username', response.data.user.name);
-      localStorage.setItem('token', response.data.token);
-
-      this.setState({ loading: false, redirect: true });
-    } catch (error) {
-      alert(error.response.data.error);
-      this.setState({ loading: false });
+        this.setState({ loading: false, redirect: true });
+      } catch (error) {
+        alert(error.response.data.error);
+        this.setState({ loading: false });
+      }
+    }
+    if (email.length <= 0 && password.length <= 0) {
+      alert('Por favor insira os dados para fazer login!');
     }
   };
 
@@ -57,7 +62,7 @@ export default class Main extends Component {
     return (
       <Container>
         <center>
-          <Title>Login</Title>
+          <Title>Login - SCFV</Title>
         </center>
 
         <Form onSubmit={this.handleSubmit}>
