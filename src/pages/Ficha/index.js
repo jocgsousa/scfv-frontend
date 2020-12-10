@@ -30,8 +30,17 @@ export default class Ficha extends Component {
     autenticated: true,
     nameUser: '',
     // dados da ficha do usuário
+
+    paifUser: '',
+    niUser: '',
     cpfUser: '',
-    telefoneUser: '',
+    rgUser: '',
+    naturalidade: '',
+    nameMae: '',
+    nameResp: '',
+    cpfResp: '',
+    rgResp: '',
+    situacao: '',
     emailUser: '',
     dataUser: '',
     sexoUser: '',
@@ -39,6 +48,7 @@ export default class Ficha extends Component {
     loadingCreateAndress: false,
     loadingUpdateAndress: false,
     loadingDeleteAndress: false,
+    cep: '',
     endereco: false,
     bairro: '',
     rua: '',
@@ -46,6 +56,12 @@ export default class Ficha extends Component {
     estado: '',
     numero: '',
     referencia: '',
+
+    // Dados de contato do ususario
+    idContato: '',
+    telFixo: '',
+    telCel: '',
+    telCel2: '',
   };
 
   async componentDidMount() {
@@ -75,11 +91,18 @@ export default class Ficha extends Component {
         user: response.data,
         nameUser: response.data.name,
         cpfUser: response.data.cpf,
-        telefoneUser: response.data.phone,
+        rgUser: response.data.rg,
+        naturalidade: response.data.naturalidade,
+        nameMae: response.data.name_mae,
+        nameResp: response.data.name_resp,
+        cpfResp: response.data.cpf_resp,
+        rgResp: response.data.rg_resp,
+        situacao: response.data.situacao,
         emailUser: response.data.email,
         dataUser: response.data.formatedDate,
         sexoUser: response.data.sexo,
         endereco: !!response.data.endereco,
+        cep: response.data.endereco ? response.data.endereco.cep : null,
         bairro: response.data.endereco ? response.data.endereco.bairro : null,
         rua: response.data.endereco ? response.data.endereco.rua : null,
         cidade: response.data.endereco ? response.data.endereco.cidade : null,
@@ -87,6 +110,16 @@ export default class Ficha extends Component {
         numero: response.data.endereco ? response.data.endereco.numero : null,
         referencia: response.data.endereco
           ? response.data.endereco.referencia
+          : null,
+
+        // Dados de contato
+        idContato: response.data.contato ? response.data.contato.id : null,
+        telFixo: response.data.contato ? response.data.contato.tel_fixo : null,
+        telCel: response.data.contato
+          ? response.data.contato.tel_celular
+          : null,
+        telCel2: response.data.contato
+          ? response.data.contato.tel_celular2
           : null,
       });
     } catch (error) {
@@ -337,7 +370,7 @@ export default class Ficha extends Component {
       user,
       nameUser,
       cpfUser,
-      telefoneUser,
+      // telefoneUser,
       emailUser,
       dataUser,
       sexoUser,
@@ -419,14 +452,14 @@ export default class Ficha extends Component {
                               />
                             </div>
 
-                            <div className="col-md-6">
+                            {/* <div className="col-md-6">
                               <span>Telefone:</span>
                               <input
                                 className="form-control"
                                 onChange={this.handleTelefone}
                                 value={telefoneUser}
                               />
-                            </div>
+                            </div> */}
 
                             <div className="col-md-6">
                               <span>E-mail:</span>

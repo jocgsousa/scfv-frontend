@@ -89,3 +89,44 @@ export const ButtonLogout = styled.button.attrs({
   position: relative;
   bottom: 4px;
 `;
+
+export const Form = styled.form.attrs({
+  className: 'form-group border',
+})`
+  padding: 20px;
+`;
+
+export const InputName = styled.input.attrs({
+  className: 'form-control',
+  placeholder: 'Nome completo',
+})``;
+
+export const InputPhone = styled.input.attrs({
+  className: 'form-control',
+  placeholder: '(xx) x xxxx-xxxx',
+  type: 'tel',
+})``;
+
+export const InputCPF = styled.input.attrs({
+  className: 'form-control',
+  placeholder: 'CPF',
+  type: 'text',
+  maxlength: '11',
+})``;
+
+export const InputDate = styled.input.attrs({
+  className: 'form-control',
+  type: 'date',
+})``;
+
+export const InputEmail = styled.input.attrs({
+  className: 'form-control',
+  type: 'email',
+  placeholder: 'E-mail',
+})``;
+
+export const SelectSexo = styled.select.attrs({
+  className: 'form-control',
+})``;
+
+export const Options = styled.option``;

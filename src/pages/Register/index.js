@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { HorizontalBar, Doughnut } from 'react-chartjs-2';
+// import { HorizontalBar, Doughnut } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
-
-import api from '../../services/api';
+// import api from '../../services/api';
 import {
   Header,
   Option,
   ContainerLoader,
   ButtonLogout,
-
-  // eslint-disable-next-line import/no-unresolved
+  Form,
+  InputName,
+  InputPhone,
+  InputCPF,
+  InputDate,
+  InputEmail,
+  SelectSexo,
+  Options,
 } from './styles';
 
 export default class Register extends Component {
@@ -18,9 +23,6 @@ export default class Register extends Component {
     loading: false,
     username: '',
     token: '',
-    charData: [],
-    ativos: 0,
-    desativados: 0,
     autenticated: true,
   };
 
@@ -35,38 +37,37 @@ export default class Register extends Component {
     this.setState({
       username: user,
       token: key,
-      loading: true,
     });
 
-    try {
-      const response = await api.get('/alunos', {
-        headers: {
-          Authorization: `Bearer ${key}`,
-        },
-      });
-      this.setState({
-        loading: false,
-        ativos: response.data.alunosAtivados.count,
-        desativados: response.data.alunosDesativados.count,
-      });
+    // try {
+    //   const response = await api.get('/alunos', {
+    //     headers: {
+    //       Authorization: `Bearer ${key}`,
+    //     },
+    //   });
+    //   this.setState({
+    //     loading: false,
+    //     ativos: response.data.alunosAtivados.count,
+    //     desativados: response.data.alunosDesativados.count,
+    //   });
 
-      const { ativos, desativados } = this.state;
-      // const total = ativos + desativados;
-      this.setState({
-        data: {
-          labels: [`Ativos: ${ativos}`, `Desativados: ${desativados}`],
-          datasets: [
-            {
-              label: 'Usuários cadastrados',
-              data: [`${ativos}`, `${desativados}`],
-              backgroundColor: ['purple', 'green'],
-            },
-          ],
-        },
-      });
-    } catch (error) {
-      console.log(error.response.data.error);
-    }
+    //   const { ativos, desativados } = this.state;
+    //   // const total = ativos + desativados;
+    //   this.setState({
+    //     data: {
+    //       labels: [`Ativos: ${ativos}`, `Desativados: ${desativados}`],
+    //       datasets: [
+    //         {
+    //           label: 'Usuários cadastrados',
+    //           data: [`${ativos}`, `${desativados}`],
+    //           backgroundColor: ['purple', 'green'],
+    //         },
+    //       ],
+    //     },
+    //   });
+    // } catch (error) {
+    //   console.log(error.response.data.error);
+    // }
   }
 
   logoff = () => {
@@ -76,7 +77,7 @@ export default class Register extends Component {
   };
 
   render() {
-    const { username, loading, autenticated, data } = this.state;
+    const { username, loading, autenticated } = this.state;
 
     return (
       <>
@@ -116,34 +117,38 @@ export default class Register extends Component {
                 </>
               ) : (
                 <>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <HorizontalBar
-                        data={data}
-                        options={{
-                          maintainAspectRatio: true,
-                          title: {
-                            display: true,
-                            text: 'Usuários registrados',
-                            fontSize: 25,
-                          },
-                        }}
-                      />
+                  <Form>
+                    <div className="row form-group ">
+                      <strong>Formulário de registro</strong>
+                      <div className="col-md-12">
+                        <span>Nome: </span>
+                        <InputName />
+                      </div>
+                      <div className="col-md-6">
+                        <span>Telefone: </span>
+                        <InputPhone />
+                      </div>
+                      <div className="col-md-6">
+                        <span>CPF: </span>
+                        <InputCPF maxlength="10" />
+                      </div>
+                      <div className="col-md-6">
+                        <span>Data de Nascimento: </span>
+                        <InputDate />
+                      </div>
+                      <div className="col-md-6">
+                        <span>Sexo: </span>
+                        <SelectSexo>
+                          <Options>M</Options>
+                          <Options>F</Options>
+                        </SelectSexo>
+                      </div>
+                      <div className="col-md-12">
+                        <span>E-mail: </span>
+                        <InputEmail />
+                      </div>
                     </div>
-                    <div className="col-md-6">
-                      <Doughnut
-                        data={data}
-                        options={{
-                          maintainAspectRatio: true,
-                          title: {
-                            display: true,
-                            text: 'Índice',
-                            fontSize: 25,
-                          },
-                        }}
-                      />
-                    </div>
-                  </div>
+                  </Form>
                 </>
               )}
             </div>
