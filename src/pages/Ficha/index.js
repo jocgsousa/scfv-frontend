@@ -468,9 +468,8 @@ export default class Ficha extends Component {
       );
       this.setState({
         loadingCreateContato: false,
-        contato: true,
+        contato: response.data,
       });
-      console.log(response.data);
     } catch (error) {
       this.setState({ loadingCreateContato: false });
       console.log(error.response.data.error);
@@ -510,6 +509,35 @@ export default class Ficha extends Component {
       console.log(error.response.data.error);
       alert(
         'Falha ao atualizar os dados de contato, por favor contate a administração'
+      );
+    }
+  };
+
+  deleteContato = async (e) => {
+    this.setState({ loadingDeleteContato: true });
+    e.preventDefault();
+
+    const { token, contato } = this.state;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      await api.delete(`/contatos/${contato.id}`, config);
+      this.setState({
+        loadingDeleteContato: false,
+        contato: false,
+        telFixo: '',
+        telCel: '',
+        telCel2: '',
+      });
+    } catch (error) {
+      this.setState({ loadingDeleteContato: false });
+      console.log(error.response.data.error);
+      alert(
+        'Falha ao deletar os dados de contato, por favor contate a administração'
       );
     }
   };
