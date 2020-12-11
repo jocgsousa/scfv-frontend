@@ -2,28 +2,38 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 // import { HorizontalBar, Doughnut } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
-// import api from '../../services/api';
+import api from '../../services/api';
 import {
   Header,
   Option,
   ContainerLoader,
   ButtonLogout,
-  Form,
-  InputName,
-  InputPhone,
-  InputCPF,
-  InputDate,
-  InputEmail,
-  SelectSexo,
-  Options,
+  ButtonSubmit,
 } from './styles';
 
 export default class Register extends Component {
   state = {
     loading: false,
+    loadingRegister: false,
     username: '',
     token: '',
     autenticated: true,
+
+    // Dados do formulário de matricula
+    nameUser: '',
+    paifUser: '',
+    nisUser: '',
+    cpfUser: '',
+    rgUser: '',
+    dataUser: '',
+    naturalidade: '',
+    nameMae: '',
+    nameResp: '',
+    cpfResp: '',
+    rgResp: '',
+    emailUser: '',
+    sexoUser: '',
+    situacao: '',
   };
 
   async componentDidMount() {
@@ -38,37 +48,69 @@ export default class Register extends Component {
       username: user,
       token: key,
     });
-
-    // try {
-    //   const response = await api.get('/alunos', {
-    //     headers: {
-    //       Authorization: `Bearer ${key}`,
-    //     },
-    //   });
-    //   this.setState({
-    //     loading: false,
-    //     ativos: response.data.alunosAtivados.count,
-    //     desativados: response.data.alunosDesativados.count,
-    //   });
-
-    //   const { ativos, desativados } = this.state;
-    //   // const total = ativos + desativados;
-    //   this.setState({
-    //     data: {
-    //       labels: [`Ativos: ${ativos}`, `Desativados: ${desativados}`],
-    //       datasets: [
-    //         {
-    //           label: 'Usuários cadastrados',
-    //           data: [`${ativos}`, `${desativados}`],
-    //           backgroundColor: ['purple', 'green'],
-    //         },
-    //       ],
-    //     },
-    //   });
-    // } catch (error) {
-    //   console.log(error.response.data.error);
-    // }
   }
+  // Alterando state do formulario
+
+  handleName = (e) => {
+    this.setState({ nameUser: e.target.value });
+  };
+
+  handlePaif = (e) => {
+    this.setState({ paifUser: e.target.value });
+  };
+
+  handleNIS = (e) => {
+    this.setState({ nisUser: e.target.value });
+  };
+
+  // Tratativa do CPF do usuário
+  handleCPF = (e) => {
+    this.setState({ cpfUser: e.target.value });
+  };
+
+  handleRG = (e) => {
+    this.setState({ rgUser: e.target.value });
+  };
+
+  handleNaturalidade = (e) => {
+    this.setState({ naturalidade: e.target.value });
+  };
+
+  handleNameMae = (e) => {
+    this.setState({ nameMae: e.target.value });
+  };
+
+  handleNameResp = (e) => {
+    this.setState({ nameResp: e.target.value });
+  };
+
+  handleCPFREsp = (e) => {
+    this.setState({ cpfResp: e.target.value });
+  };
+
+  handleRGResp = (e) => {
+    this.setState({ rgResp: e.target.value });
+  };
+
+  handleSituacao = (e) => {
+    this.setState({ situacao: e.target.value });
+  };
+
+  // Tratativa do Email do usuário
+  handleEmail = (e) => {
+    this.setState({ emailUser: e.target.value });
+  };
+
+  // Tratativa do Data de Nascimento do usuário
+  handleDataNascimento = (e) => {
+    this.setState({ dataUser: e.target.value });
+  };
+
+  // Tratativa do Email do usuário
+  handleSexo = (e) => {
+    const { value } = e.target;
+    this.setState({ sexoUser: value });
+  };
 
   logoff = () => {
     localStorage.removeItem('token');
@@ -76,8 +118,85 @@ export default class Register extends Component {
     this.setState({ autenticated: false });
   };
 
+  handleRegister = async (e) => {
+    const {
+      token,
+      nameUser,
+      paifUser,
+      nisUser,
+      cpfUser,
+      rgUser,
+      dataUser,
+      naturalidade,
+      nameMae,
+      nameResp,
+      cpfResp,
+      rgResp,
+      emailUser,
+      sexoUser,
+      situacao,
+    } = this.state;
+
+    e.preventDefault();
+    if (nameUser !== '' || rgUser !== '') {
+      this.setState({ loadingRegister: true });
+      const beareToken = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      try {
+        const response = await api.post(
+          '/alunos',
+          {
+            paif: paifUser,
+            nis: nisUser,
+            name: nameUser,
+            email: emailUser,
+            rg: rgUser,
+            naturalidade,
+            name_mae: nameMae,
+            name_resp: nameResp,
+            cpf_resp: cpfResp,
+            rg_resp: rgResp,
+            situacao,
+            data_nascimento: dataUser,
+            cpf: cpfUser,
+            sexo: sexoUser,
+          },
+          beareToken
+        );
+        this.setState({ loadingRegister: false });
+        console.log(response);
+      } catch (error) {
+        this.setState({ loadingRegister: false });
+        console.log(error.response.data.error);
+      }
+    }
+  };
+
   render() {
-    const { username, loading, autenticated } = this.state;
+    const {
+      username,
+      loading,
+      loadingRegister,
+      autenticated,
+      nameUser,
+      paifUser,
+      nisUser,
+      cpfUser,
+      rgUser,
+      dataUser,
+      naturalidade,
+      nameMae,
+      nameResp,
+      cpfResp,
+      rgResp,
+      emailUser,
+      sexoUser,
+      situacao,
+    } = this.state;
 
     return (
       <>
@@ -117,38 +236,231 @@ export default class Register extends Component {
                 </>
               ) : (
                 <>
-                  <Form>
-                    <div className="row form-group ">
-                      <strong>Formulário de registro</strong>
+                  <form onSubmit={this.handleRegister}>
+                    <div className="row">
                       <div className="col-md-12">
-                        <span>Nome: </span>
-                        <InputName />
+                        <span>
+                          Nome Completo: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <input
+                          className="form-control"
+                          onChange={this.handleName}
+                          value={nameUser}
+                        />
                       </div>
                       <div className="col-md-6">
-                        <span>Telefone: </span>
-                        <InputPhone />
+                        <span>Paif:</span>
+                        <input
+                          className="form-control"
+                          onChange={this.handlePaif}
+                          value={paifUser}
+                        />
                       </div>
+
                       <div className="col-md-6">
-                        <span>CPF: </span>
-                        <InputCPF maxlength="10" />
+                        <span>NIS:</span>
+                        <input
+                          className="form-control"
+                          onChange={this.handleNIS}
+                          value={nisUser}
+                        />
                       </div>
+
                       <div className="col-md-6">
-                        <span>Data de Nascimento: </span>
-                        <InputDate />
+                        <span>CPF:</span>
+                        <input
+                          className="form-control"
+                          onChange={this.handleCPF}
+                          value={cpfUser}
+                        />
                       </div>
+
                       <div className="col-md-6">
-                        <span>Sexo: </span>
-                        <SelectSexo>
-                          <Options>M</Options>
-                          <Options>F</Options>
-                        </SelectSexo>
+                        <span>
+                          RG: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <input
+                          className="form-control"
+                          onChange={this.handleRG}
+                          value={rgUser}
+                        />
                       </div>
+
+                      <div className="col-md-6">
+                        <span>
+                          Data/Nascimento: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <input
+                          type="date"
+                          className="form-control"
+                          onChange={this.handleDataNascimento}
+                          value={dataUser}
+                        />
+                      </div>
+
+                      <div className="col-md-6">
+                        <span>
+                          Naturalidade: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={this.handleNaturalidade}
+                          value={naturalidade}
+                        />
+                      </div>
+
+                      <div className="col-md-6">
+                        <span>
+                          Nome da Mãe: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={this.handleNameMae}
+                          value={nameMae}
+                        />
+                      </div>
+
+                      <div className="col-md-6">
+                        <span>
+                          Nome do responsável: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={this.handleNameResp}
+                          value={nameResp}
+                        />
+                      </div>
+
+                      <div className="col-md-6">
+                        <span>
+                          CPF Responsável: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <input
+                          className="form-control"
+                          onChange={this.handleCPFREsp}
+                          value={cpfResp}
+                        />
+                      </div>
+
+                      <div className="col-md-6">
+                        <span>
+                          RG responsável: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <input
+                          className="form-control"
+                          onChange={this.handleRGResp}
+                          value={rgResp}
+                        />
+                      </div>
+
+                      <div className="col-md-6">
+                        <span>
+                          E-mail: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <input
+                          type="email"
+                          className="form-control"
+                          onChange={this.handleEmail}
+                          value={emailUser}
+                        />
+                      </div>
+
+                      <div className="col-md-6">
+                        <span>
+                          Sexo: selecionado [{sexoUser}]{' '}
+                          <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <select
+                          onChange={this.handleSexo}
+                          name="sexo"
+                          className="form-control"
+                          value={sexoUser}
+                        >
+                          <option value="F">FEMININO</option>
+                          <option value="M">MASCULINO</option>
+                        </select>
+                      </div>
+
                       <div className="col-md-12">
-                        <span>E-mail: </span>
-                        <InputEmail />
+                        <span>
+                          Situação: <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <select
+                          className="form-control"
+                          onChange={this.handleSituacao}
+                          value={situacao}
+                        >
+                          <option value="Não está em situação de prioritária">
+                            Não está em situação de prioritária
+                          </option>
+                          <option value="Em situação de isolamento">
+                            Em situação de isolamento
+                          </option>
+                          <option value="Trabalho Infantil">
+                            Trabalho Infantil
+                          </option>
+                          <option value="Vivência de violência ou negligência">
+                            Vivência de violência ou negligência
+                          </option>
+                          <option
+                            value="Fora da escola ou com defasagem escola
+                                  superior a 2(dois) anos"
+                          >
+                            Fora da escola ou com defasagem escola superior a
+                            2(dois) anos
+                          </option>
+                          <option value="Em situação de acolhimento">
+                            Em situação de acolhimento
+                          </option>
+                          <option
+                            value="Em cumprimento de medida socioeducativa em
+                                  meio aberto"
+                          >
+                            Em cumprimento de medida socioeducativa em meio
+                            aberto
+                          </option>
+                          <option value="Egressos de medidas socioeducativas">
+                            Egressos de medidas socioeducativas
+                          </option>
+                          <option value="Situação de abuso e/ou exploração sexual">
+                            Situação de abuso e/ou exploração sexual
+                          </option>
+                          <option
+                            value="Com medidas de proteção do Estatuto da Criança
+                                  e do Adolescente - ECA"
+                          >
+                            Com medidas de proteção do Estatuto da Criança e do
+                            Adolescente - ECA
+                          </option>
+                          <option value="Crianças e adolescentes em situação de rua">
+                            Crianças e adolescentes em situação de rua
+                          </option>
+                          <option
+                            value="Vulnerabilidade que diz respeito às pessoas
+                                  com deficiência"
+                          >
+                            Vulnerabilidade que diz respeito às pessoas com
+                            deficiência
+                          </option>
+                        </select>
+                      </div>
+
+                      <br />
+                      <div className="col-md-12">
+                        <ButtonSubmit>
+                          {loadingRegister ? (
+                            <ClipLoader size={20} color="#FFFF" />
+                          ) : (
+                            'Cadastrar'
+                          )}
+                        </ButtonSubmit>
                       </div>
                     </div>
-                  </Form>
+                  </form>
+                  <br />
                 </>
               )}
             </div>

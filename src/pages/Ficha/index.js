@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 // import { HorizontalBar, Doughnut } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
-
 import api from '../../services/api';
 import {
   Header,
@@ -729,13 +728,66 @@ export default class Ficha extends Component {
                               </select>
                             </div>
 
-                            <div className="col-md-6">
+                            <div className="col-md-12">
                               <span>Situação:</span>
-                              <input
+                              <select
                                 className="form-control"
                                 onChange={this.handleSituacao}
                                 value={situacao}
-                              />
+                              >
+                                <option value="Não está em situação de prioritária">
+                                  Não está em situação de prioritária
+                                </option>
+                                <option value="Em situação de isolamento">
+                                  Em situação de isolamento
+                                </option>
+                                <option value="Trabalho Infantil">
+                                  Trabalho Infantil
+                                </option>
+                                <option value="Vivência de violência ou negligência">
+                                  Vivência de violência ou negligência
+                                </option>
+                                <option
+                                  value="Fora da escola ou com defasagem escola
+                                  superior a 2(dois) anos"
+                                >
+                                  Fora da escola ou com defasagem escola
+                                  superior a 2(dois) anos
+                                </option>
+                                <option value="Em situação de acolhimento">
+                                  Em situação de acolhimento
+                                </option>
+                                <option
+                                  value="Em cumprimento de medida socioeducativa em
+                                  meio aberto"
+                                >
+                                  Em cumprimento de medida socioeducativa em
+                                  meio aberto
+                                </option>
+                                <option value="Egressos de medidas socioeducativas">
+                                  Egressos de medidas socioeducativas
+                                </option>
+                                <option value="Situação de abuso e/ou exploração sexual">
+                                  Situação de abuso e/ou exploração sexual
+                                </option>
+                                <option
+                                  value="Com medidas de proteção do Estatuto da Criança
+                                  e do Adolescente - ECA"
+                                >
+                                  Com medidas de proteção do Estatuto da Criança
+                                  e do Adolescente - ECA
+                                </option>
+                                <option value="Crianças e adolescentes em situação de rua">
+                                  Crianças e adolescentes em situação de rua
+                                </option>
+                                <option
+                                  value="Vulnerabilidade que diz respeito às pessoas
+                                  com deficiência"
+                                >
+                                  Vulnerabilidade que diz respeito às pessoas
+                                  com deficiência
+                                </option>
+                              </select>
                             </div>
 
                             <br />

@@ -62,7 +62,6 @@ export default class Users extends Component {
         desativados: response.data.alunosDesativados.rows,
         qdtDesativados: response.data.alunosDesativados.count,
       });
-      console.log(response);
     } catch (error) {
       console.log(error.response.data.error);
     }

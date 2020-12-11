@@ -130,3 +130,15 @@ export const SelectSexo = styled.select.attrs({
 })``;
 
 export const Options = styled.option``;
+
+export const ButtonSubmit = styled.button`
+  margin-top: 14px;
+  margin-bottom: 14px;
+  border-radius: 4px;
+  width: 200px;
+  height: 40px;
+  background-color: #7159c1;
+  border: 1px solid blue;
+  color: white;
+  outline: none;
+`;
