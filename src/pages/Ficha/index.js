@@ -32,7 +32,7 @@ export default class Ficha extends Component {
     // dados da ficha do usuário
 
     paifUser: '',
-    niUser: '',
+    nisUser: '',
     cpfUser: '',
     rgUser: '',
     naturalidade: '',
@@ -58,6 +58,10 @@ export default class Ficha extends Component {
     referencia: '',
 
     // Dados de contato do ususario
+    contato: false,
+    loadingCreateContato: false,
+    loadingUpdateContato: false,
+    loadingDeleteContato: false,
     idContato: '',
     telFixo: '',
     telCel: '',
@@ -88,7 +92,10 @@ export default class Ficha extends Component {
       });
       this.setState({
         loading: false,
+        // Dados do usuário
         user: response.data,
+        paifUser: response.data.paif,
+        nisUser: response.data.nis,
         nameUser: response.data.name,
         cpfUser: response.data.cpf,
         rgUser: response.data.rg,
@@ -101,6 +108,7 @@ export default class Ficha extends Component {
         emailUser: response.data.email,
         dataUser: response.data.formatedDate,
         sexoUser: response.data.sexo,
+        // Dados de endereço do usuário
         endereco: !!response.data.endereco,
         cep: response.data.endereco ? response.data.endereco.cep : null,
         bairro: response.data.endereco ? response.data.endereco.bairro : null,
@@ -113,6 +121,7 @@ export default class Ficha extends Component {
           : null,
 
         // Dados de contato
+        contato: response.data.contato ? response.data.contato : false,
         idContato: response.data.contato ? response.data.contato.id : null,
         telFixo: response.data.contato ? response.data.contato.tel_fixo : null,
         telCel: response.data.contato
@@ -140,9 +149,45 @@ export default class Ficha extends Component {
     this.setState({ nameUser: e.target.value });
   };
 
+  handlePaif = (e) => {
+    this.setState({ paifUser: e.target.value });
+  };
+
+  handleNIS = (e) => {
+    this.setState({ nisUser: e.target.value });
+  };
+
   // Tratativa do CPF do usuário
   handleCPF = (e) => {
     this.setState({ cpfUser: e.target.value });
+  };
+
+  handleRG = (e) => {
+    this.setState({ rgUser: e.target.value });
+  };
+
+  handleNaturalidade = (e) => {
+    this.setState({ naturalidade: e.target.value });
+  };
+
+  handleNameMae = (e) => {
+    this.setState({ nameMae: e.target.value });
+  };
+
+  handleNameResp = (e) => {
+    this.setState({ nameResp: e.target.value });
+  };
+
+  handleCPFREsp = (e) => {
+    this.setState({ cpfResp: e.target.value });
+  };
+
+  handleRGResp = (e) => {
+    this.setState({ rgResp: e.target.value });
+  };
+
+  handleSituacao = (e) => {
+    this.setState({ situacao: e.target.value });
   };
 
   // Tratativa do Telefone do usuário
@@ -192,6 +237,10 @@ export default class Ficha extends Component {
   };
 
   // Tratativa dos dados de endereco do usuário
+  handleCep = (e) => {
+    this.setState({ cep: e.target.value });
+  };
+
   handleBairro = (e) => {
     this.setState({ bairro: e.target.value });
   };
@@ -216,15 +265,36 @@ export default class Ficha extends Component {
     this.setState({ referencia: e.target.value });
   };
 
+  handleTelFixo = (e) => {
+    this.setState({ telFixo: e.target.value });
+  };
+
+  handleTelCel = (e) => {
+    this.setState({ telCel: e.target.value });
+  };
+
+  handleTelCel2 = (e) => {
+    this.setState({ telCel2: e.target.value });
+  };
+
   updateUser = async (e) => {
     this.setState({ loadingUpdate: true });
     e.preventDefault();
     const {
       token,
+      paifUser,
+      nisUser,
+      cpfUser,
+      rgUser,
+      naturalidade,
+      nameMae,
+      nameResp,
+      cpfResp,
+      rgResp,
+      situacao,
       nameUser,
       telefoneUser,
       emailUser,
-      cpfUser,
       dataUser,
       user,
       sexoUser,
@@ -233,9 +303,18 @@ export default class Ficha extends Component {
     try {
       const object = {
         id: user.id,
+        paif: paifUser,
+        nis: nisUser,
         name: nameUser,
         phone: telefoneUser,
         email: emailUser,
+        rg: rgUser,
+        naturalidade,
+        name_mae: nameMae,
+        name_resp: nameResp,
+        cpf_resp: cpfResp,
+        rg_resp: rgResp,
+        situacao,
         data_nascimento: dataUser,
         cpf: cpfUser,
         sexo: sexoUser,
@@ -262,6 +341,7 @@ export default class Ficha extends Component {
     const {
       token,
       user,
+      cep,
       bairro,
       rua,
       cidade,
@@ -271,6 +351,7 @@ export default class Ficha extends Component {
     } = this.state;
     // Object for andress
     const object = {
+      cep,
       bairro,
       rua,
       cidade,
@@ -299,6 +380,7 @@ export default class Ficha extends Component {
 
     const {
       token,
+      cep,
       user,
       bairro,
       rua,
@@ -310,6 +392,7 @@ export default class Ficha extends Component {
     // Object for andress
     const object = {
       id: user.id,
+      cep,
       bairro,
       rua,
       cidade,
@@ -347,6 +430,7 @@ export default class Ficha extends Component {
 
       this.setState({
         loadingDeleteAndress: false,
+        cep: '',
         endereco: false,
         bairro: '',
         rua: '',
@@ -361,16 +445,95 @@ export default class Ficha extends Component {
     }
   };
 
+  createContato = async (e) => {
+    this.setState({ loadingCreateContato: true });
+    e.preventDefault();
+
+    const { token, user, telFixo, telCel, telCel2 } = this.state;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const response = await api.post(
+        '/contatos',
+        {
+          id_user: user.id,
+          tel_fixo: telFixo,
+          tel_celular: telCel,
+          tel_celular2: telCel2,
+        },
+        config
+      );
+      this.setState({
+        loadingCreateContato: false,
+        contato: true,
+      });
+      console.log(response.data);
+    } catch (error) {
+      this.setState({ loadingCreateContato: false });
+      console.log(error.response.data.error);
+      alert(
+        'Falha ao cadastra os dados de contato, por favor contate a administração'
+      );
+    }
+  };
+
+  updateContato = async (e) => {
+    this.setState({ loadingUpdateContato: true });
+    e.preventDefault();
+
+    const { token, contato, telFixo, telCel, telCel2 } = this.state;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      await api.put(
+        '/contatos',
+        {
+          id: contato.id,
+          tel_fixo: telFixo,
+          tel_celular: telCel,
+          tel_celular2: telCel2,
+        },
+        config
+      );
+      this.setState({
+        loadingUpdateContato: false,
+      });
+    } catch (error) {
+      this.setState({ loadingUpdateContato: false });
+      console.log(error.response.data.error);
+      alert(
+        'Falha ao atualizar os dados de contato, por favor contate a administração'
+      );
+    }
+  };
+
   render() {
     const {
       username,
       loading,
       loadingUpdate,
       autenticated,
+      // dados do usuário
       user,
+      paifUser,
+      nisUser,
       nameUser,
       cpfUser,
-      // telefoneUser,
+      rgUser,
+      naturalidade,
+      nameMae,
+      nameResp,
+      cpfResp,
+      rgResp,
+      situacao,
       emailUser,
       dataUser,
       sexoUser,
@@ -378,6 +541,7 @@ export default class Ficha extends Component {
       loadingUpdateAndress,
       loadingCreateAndress,
       loadingDeleteAndress,
+      cep,
       endereco,
       bairro,
       rua,
@@ -385,6 +549,14 @@ export default class Ficha extends Component {
       estado,
       numero,
       referencia,
+      // dados de contato do usuário
+      contato,
+      loadingUpdateContato,
+      loadingCreateContato,
+      loadingDeleteContato,
+      telFixo,
+      telCel,
+      telCel2,
     } = this.state;
 
     return (
@@ -442,6 +614,23 @@ export default class Ficha extends Component {
                                 value={nameUser}
                               />
                             </div>
+                            <div className="col-md-6">
+                              <span>Paif:</span>
+                              <input
+                                className="form-control"
+                                onChange={this.handlePaif}
+                                value={paifUser}
+                              />
+                            </div>
+
+                            <div className="col-md-6">
+                              <span>NIS:</span>
+                              <input
+                                className="form-control"
+                                onChange={this.handleNIS}
+                                value={nisUser}
+                              />
+                            </div>
 
                             <div className="col-md-6">
                               <span>CPF:</span>
@@ -452,21 +641,12 @@ export default class Ficha extends Component {
                               />
                             </div>
 
-                            {/* <div className="col-md-6">
-                              <span>Telefone:</span>
-                              <input
-                                className="form-control"
-                                onChange={this.handleTelefone}
-                                value={telefoneUser}
-                              />
-                            </div> */}
-
                             <div className="col-md-6">
-                              <span>E-mail:</span>
+                              <span>RG:</span>
                               <input
                                 className="form-control"
-                                onChange={this.handleEmail}
-                                value={emailUser}
+                                onChange={this.handleRG}
+                                value={rgUser}
                               />
                             </div>
 
@@ -481,6 +661,64 @@ export default class Ficha extends Component {
                             </div>
 
                             <div className="col-md-6">
+                              <span>Naturalidade:</span>
+                              <input
+                                type="text"
+                                className="form-control"
+                                onChange={this.handleNaturalidade}
+                                value={naturalidade}
+                              />
+                            </div>
+
+                            <div className="col-md-6">
+                              <span>Nome da Mãe:</span>
+                              <input
+                                type="text"
+                                className="form-control"
+                                onChange={this.handleNameMae}
+                                value={nameMae}
+                              />
+                            </div>
+
+                            <div className="col-md-6">
+                              <span>Nome do responsável:</span>
+                              <input
+                                type="text"
+                                className="form-control"
+                                onChange={this.handleNameResp}
+                                value={nameResp}
+                              />
+                            </div>
+
+                            <div className="col-md-6">
+                              <span>CPF Responsável:</span>
+                              <input
+                                className="form-control"
+                                onChange={this.handleCPFREsp}
+                                value={cpfResp}
+                              />
+                            </div>
+
+                            <div className="col-md-6">
+                              <span>RG responsável:</span>
+                              <input
+                                className="form-control"
+                                onChange={this.handleRGResp}
+                                value={rgResp}
+                              />
+                            </div>
+
+                            <div className="col-md-6">
+                              <span>E-mail:</span>
+                              <input
+                                type="email"
+                                className="form-control"
+                                onChange={this.handleEmail}
+                                value={emailUser}
+                              />
+                            </div>
+
+                            <div className="col-md-6">
                               <span>Sexo: selecionado [{sexoUser}]</span>
                               <select
                                 onChange={this.handleSexo}
@@ -490,6 +728,16 @@ export default class Ficha extends Component {
                                 {this.checkForm(sexoUser)}
                               </select>
                             </div>
+
+                            <div className="col-md-6">
+                              <span>Situação:</span>
+                              <input
+                                className="form-control"
+                                onChange={this.handleSituacao}
+                                value={situacao}
+                              />
+                            </div>
+
                             <br />
                             <div className="col-md-12">
                               <ButtonSubmit>
@@ -511,6 +759,15 @@ export default class Ficha extends Component {
                         <hr />
                         <form>
                           <div className="row">
+                            <div className="col-md-12">
+                              <span>CEP:</span>
+                              <input
+                                className="form-control"
+                                onChange={this.handleCep}
+                                value={cep}
+                              />
+                            </div>
+
                             <div className="col-md-12">
                               <span>Bairro:</span>
                               <input
@@ -586,6 +843,69 @@ export default class Ficha extends Component {
                                     <ClipLoader size={20} color="#FFFF" />
                                   ) : (
                                     'Cadastrar Endereço'
+                                  )}
+                                </ButtonSubmit>
+                              )}
+                            </div>
+                          </div>
+                        </form>
+
+                        <h5>Dados de Contato</h5>
+                        <hr />
+                        <form>
+                          <div className="row">
+                            <div className="col-md-12">
+                              <span>Telefone fixo:</span>
+                              <input
+                                className="form-control"
+                                onChange={this.handleTelFixo}
+                                value={telFixo}
+                              />
+                            </div>
+
+                            <div className="col-md-12">
+                              <span>Telefone celular:</span>
+                              <input
+                                className="form-control"
+                                onChange={this.handleTelCel}
+                                value={telCel}
+                              />
+                            </div>
+
+                            <div className="col-md-12">
+                              <span>Telefone Celular:</span>
+                              <input
+                                className="form-control"
+                                onChange={this.handleTelCel2}
+                                value={telCel2}
+                              />
+                            </div>
+
+                            <div className="col-md-12">
+                              {contato ? (
+                                <>
+                                  <ButtonSubmit onClick={this.updateContato}>
+                                    {loadingUpdateContato ? (
+                                      <ClipLoader size={20} color="#FFFF" />
+                                    ) : (
+                                      'Atualizar Contato'
+                                    )}
+                                  </ButtonSubmit>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <ButtonSubmit onClick={this.deleteContato}>
+                                    {loadingDeleteContato ? (
+                                      <ClipLoader size={20} color="#FFFF" />
+                                    ) : (
+                                      'Excluir Contato'
+                                    )}
+                                  </ButtonSubmit>
+                                </>
+                              ) : (
+                                <ButtonSubmit onClick={this.createContato}>
+                                  {loadingCreateContato ? (
+                                    <ClipLoader size={20} color="#FFFF" />
+                                  ) : (
+                                    'Cadastrar Contato'
                                   )}
                                 </ButtonSubmit>
                               )}
