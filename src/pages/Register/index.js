@@ -138,41 +138,40 @@ export default class Register extends Component {
     } = this.state;
 
     e.preventDefault();
-    if (nameUser !== '' || rgUser !== '') {
-      this.setState({ loadingRegister: true });
-      const beareToken = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
 
-      try {
-        const response = await api.post(
-          '/alunos',
-          {
-            paif: paifUser,
-            nis: nisUser,
-            name: nameUser,
-            email: emailUser,
-            rg: rgUser,
-            naturalidade,
-            name_mae: nameMae,
-            name_resp: nameResp,
-            cpf_resp: cpfResp,
-            rg_resp: rgResp,
-            situacao,
-            data_nascimento: dataUser,
-            cpf: cpfUser,
-            sexo: sexoUser,
-          },
-          beareToken
-        );
-        this.setState({ loadingRegister: false });
-        console.log(response);
-      } catch (error) {
-        this.setState({ loadingRegister: false });
-        console.log(error.response.data.error);
-      }
+    this.setState({ loadingRegister: true });
+    const beareToken = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const response = await api.post(
+        '/alunos',
+        {
+          paif: paifUser,
+          nis: nisUser,
+          name: nameUser,
+          email: emailUser,
+          rg: rgUser,
+          naturalidade,
+          name_mae: nameMae,
+          name_resp: nameResp,
+          cpf_resp: cpfResp,
+          rg_resp: rgResp,
+          situacao,
+          data_nascimento: dataUser,
+          cpf: cpfUser,
+          sexo: sexoUser,
+        },
+        beareToken
+      );
+      this.setState({ loadingRegister: false });
+      console.log(response);
+    } catch (error) {
+      this.setState({ loadingRegister: false });
+      console.log(error.response.data.error);
     }
   };
 

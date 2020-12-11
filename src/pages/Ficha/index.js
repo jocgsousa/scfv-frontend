@@ -133,7 +133,6 @@ export default class Ficha extends Component {
     } catch (error) {
       alert('Usuário não existe ');
       <Redirect to="/painel" />;
-      console.log(error.response.data.error);
     }
   }
 
