@@ -34,6 +34,9 @@ export default class Register extends Component {
     emailUser: '',
     sexoUser: '',
     situacao: '',
+    turno: 'Matutino',
+    // Confirmação de registro
+    registered: false,
   };
 
   async componentDidMount() {
@@ -112,6 +115,10 @@ export default class Register extends Component {
     this.setState({ sexoUser: value });
   };
 
+  handleTurno = (e) => {
+    this.setState({ turno: e.target.value });
+  };
+
   logoff = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
@@ -135,43 +142,93 @@ export default class Register extends Component {
       emailUser,
       sexoUser,
       situacao,
+      turno,
     } = this.state;
 
     e.preventDefault();
 
-    this.setState({ loadingRegister: true });
-    const beareToken = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    try {
-      const response = await api.post(
-        '/alunos',
-        {
-          paif: paifUser,
-          nis: nisUser,
-          name: nameUser,
-          email: emailUser,
-          rg: rgUser,
-          naturalidade,
-          name_mae: nameMae,
-          name_resp: nameResp,
-          cpf_resp: cpfResp,
-          rg_resp: rgResp,
-          situacao,
-          data_nascimento: dataUser,
-          cpf: cpfUser,
-          sexo: sexoUser,
+    if (
+      nameUser !== '' &&
+      paifUser !== '' &&
+      nisUser !== '' &&
+      cpfUser !== '' &&
+      rgUser !== '' &&
+      dataUser !== '' &&
+      naturalidade !== '' &&
+      nameMae !== '' &&
+      nameResp !== '' &&
+      cpfResp !== '' &&
+      rgResp !== '' &&
+      emailUser !== '' &&
+      sexoUser !== '' &&
+      situacao !== '' &&
+      turno !== ''
+    ) {
+      this.setState({ loadingRegister: true });
+      alert('Todos os campos foram preenchidos');
+      const beareToken = {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        beareToken
-      );
-      this.setState({ loadingRegister: false });
-      console.log(response);
-    } catch (error) {
-      this.setState({ loadingRegister: false });
-      console.log(error.response.data.error);
+      };
+
+      try {
+        const response = await api.post(
+          '/alunos',
+          {
+            paif: paifUser,
+            nis: nisUser,
+            name: nameUser,
+            email: emailUser,
+            rg: rgUser,
+            naturalidade,
+            name_mae: nameMae,
+            name_resp: nameResp,
+            cpf_resp: cpfResp,
+            rg_resp: rgResp,
+            situacao,
+            data_nascimento: dataUser,
+            cpf: cpfUser,
+            sexo: sexoUser,
+            turno,
+          },
+          beareToken
+        );
+
+        console.log(response);
+        alert(
+          'Cadastro Realizado com Sucesso!, redirecionando para página de usuários'
+        );
+        this.setState({ loadingRegister: false, registered: true });
+      } catch (error) {
+        this.setState({ loadingRegister: false, registered: false });
+        console.log(error.response.data.error);
+        alert(
+          error.response.data.error
+            ? error.response.data.error
+            : 'Não foi possível realizar o cadastrao, contate o administrador do sistema'
+        );
+      }
+    }
+
+    if (
+      nameUser === '' ||
+      paifUser === '' ||
+      nisUser === '' ||
+      cpfUser === '' ||
+      rgUser === '' ||
+      dataUser === '' ||
+      naturalidade === '' ||
+      nameMae === '' ||
+      nameResp === '' ||
+      cpfResp === '' ||
+      rgResp === '' ||
+      emailUser === '' ||
+      sexoUser === '' ||
+      situacao === '' ||
+      turno === ''
+    ) {
+      alert('Todos os campos devem ser preenchidos para realizar a matrícula');
     }
   };
 
@@ -195,13 +252,16 @@ export default class Register extends Component {
       emailUser,
       sexoUser,
       situacao,
+      turno,
+      registered,
     } = this.state;
 
     return (
       <>
         {autenticated ? '' : <Redirect to="/" />}
+        {registered ? <Redirect to="/users" /> : ''}
         <Header>
-          SCFV - {username}{' '}
+          SCFV - {username}
           <ButtonLogout onClick={this.logoff}>SAIR</ButtonLogout>
         </Header>
         <br />
@@ -237,6 +297,10 @@ export default class Register extends Component {
                 <>
                   <form onSubmit={this.handleRegister}>
                     <div className="row">
+                      <div className="col-md-12">
+                        <h6>Formulário de registro</h6>
+                      </div>
+                      <hr />
                       <div className="col-md-12">
                         <span>
                           Nome Completo: <i style={{ color: 'red' }}>*</i>
@@ -444,6 +508,22 @@ export default class Register extends Component {
                             Vulnerabilidade que diz respeito às pessoas com
                             deficiência
                           </option>
+                        </select>
+                      </div>
+
+                      <div className="col-md-6">
+                        <span>
+                          Turno:
+                          <i style={{ color: 'red' }}>*</i>
+                        </span>
+                        <select
+                          onChange={this.handleTurno}
+                          name="turno"
+                          className="form-control"
+                          value={turno}
+                        >
+                          <option value="Matutino">Matutino</option>
+                          <option value="Vespertino">Vespertino</option>
                         </select>
                       </div>
 

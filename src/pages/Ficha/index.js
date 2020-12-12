@@ -43,6 +43,7 @@ export default class Ficha extends Component {
     emailUser: '',
     dataUser: '',
     sexoUser: '',
+    turno: '',
     // Dados de endereco
     loadingCreateAndress: false,
     loadingUpdateAndress: false,
@@ -107,6 +108,7 @@ export default class Ficha extends Component {
         emailUser: response.data.email,
         dataUser: response.data.formatedDate,
         sexoUser: response.data.sexo,
+        turno: response.data.turno,
         // Dados de endereço do usuário
         endereco: !!response.data.endereco,
         cep: response.data.endereco ? response.data.endereco.cep : null,
@@ -209,6 +211,12 @@ export default class Ficha extends Component {
     this.setState({ sexoUser: value });
   };
 
+  // Tratativa do Turno do usuário
+  handleTurno = (e) => {
+    const { value } = e.target;
+    this.setState({ turno: value });
+  };
+
   checkForm = (e) => {
     if (e === 'M') {
       return (
@@ -294,6 +302,7 @@ export default class Ficha extends Component {
       telefoneUser,
       emailUser,
       dataUser,
+      turno,
       user,
       sexoUser,
     } = this.state;
@@ -316,6 +325,7 @@ export default class Ficha extends Component {
         data_nascimento: dataUser,
         cpf: cpfUser,
         sexo: sexoUser,
+        turno,
       };
 
       const config = {
@@ -563,6 +573,7 @@ export default class Ficha extends Component {
       emailUser,
       dataUser,
       sexoUser,
+      turno,
       // dados de endereco
       loadingUpdateAndress,
       loadingCreateAndress,
@@ -752,6 +763,19 @@ export default class Ficha extends Component {
                                 className="form-control"
                               >
                                 {this.checkForm(sexoUser)}
+                              </select>
+                            </div>
+
+                            <div className="col-md-6">
+                              <span>Turno:</span>
+                              <select
+                                onChange={this.handleTurno}
+                                name="sexo"
+                                className="form-control"
+                                value={turno}
+                              >
+                                <option value="Matutino">Matutino</option>
+                                <option value="Vespertino">Vespertino</option>
                               </select>
                             </div>
 

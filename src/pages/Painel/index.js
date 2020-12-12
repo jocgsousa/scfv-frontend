@@ -16,6 +16,7 @@ import {
   List,
   Item,
   ButtonOption,
+  Button,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -232,6 +233,37 @@ export default class Painel extends Component {
                     ) : (
                       ''
                     )}
+                  </div>
+
+                  <div className="row border">
+                    <div className="col-md-6">
+                      <Link to="/relat1">
+                        <Button>
+                          GERAR RELATÓRIO DE ADOLESCENTES - MATUTINO
+                        </Button>
+                      </Link>
+                    </div>
+
+                    <div className="col-md-6">
+                      <Link to="/relat2">
+                        <Button>
+                          GERAR RELATÓRIO DE ADOLESCENTES - VESPERTINO
+                        </Button>
+                      </Link>
+                    </div>
+
+                    <div className="col-md-6">
+                      <Link to="/relat2">
+                        <Button>GERAR RELATÓRIO DE CRIANÇAS - MATUTINO</Button>
+                      </Link>
+                    </div>
+                    <div className="col-md-6">
+                      <Link to="/relat2">
+                        <Button>
+                          GERAR RELATÓRIO DE CRIANÇAS - VESPERTINO
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </>
               )}

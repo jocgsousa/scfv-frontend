@@ -86,3 +86,15 @@ export const ButtonOption = styled.button.attrs({
   float: right;
   border: 3px solid rgba(0, 153, 255, 0.5);
 `;
+
+export const Button = styled.button`
+  margin: 10px;
+  border-radius: 4px;
+  background-color: #7159c1;
+  color: white;
+  border: 1px solid #7159c1;
+  padding: 10px;
+  outline: none;
+  width: 350px;
+  font-size: 12px;
+`;
