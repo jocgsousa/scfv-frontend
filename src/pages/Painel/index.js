@@ -253,12 +253,12 @@ export default class Painel extends Component {
                     </div>
 
                     <div className="col-md-6">
-                      <Link to="/relat2">
+                      <Link to="/relat3">
                         <Button>GERAR RELATÓRIO DE CRIANÇAS - MATUTINO</Button>
                       </Link>
                     </div>
                     <div className="col-md-6">
-                      <Link to="/relat2">
+                      <Link to="/relat4">
                         <Button>
                           GERAR RELATÓRIO DE CRIANÇAS - VESPERTINO
                         </Button>

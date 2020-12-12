@@ -10,6 +10,8 @@ import Ficha from './pages/Ficha';
 import Encaminhamentos from './pages/Encaminhamentos';
 import Relatorio1 from './pages/Relatorio1';
 import Relatorio2 from './pages/Relatorio2';
+import Relatorio3 from './pages/Relatorio3';
+import Relatorio4 from './pages/Relatorio4';
 
 export default function Routes() {
   return (
@@ -23,6 +25,8 @@ export default function Routes() {
         {/* Rotas para relatório */}
         <Route path="/relat1/" component={Relatorio1} />
         <Route path="/relat2/" component={Relatorio2} />
+        <Route path="/relat3/" component={Relatorio3} />
+        <Route path="/relat4/" component={Relatorio4} />
         <Route path="/encaminhamentos" component={Encaminhamentos} />
       </Switch>
     </BrowserRouter>

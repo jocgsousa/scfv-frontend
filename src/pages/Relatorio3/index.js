@@ -9,7 +9,7 @@ export default class Relatorio1 extends Component {
   state = {
     auth: true,
     users: [],
-    adolescentesMatutino: [],
+    criancaMatutino: [],
     adolescentesVespertino: [],
     loading: false,
     token: '',
@@ -39,19 +39,19 @@ export default class Relatorio1 extends Component {
       // Vamos pegar todos os adolescentes e colocar no array
       const users = response.data.alunosAtivados.rows;
 
-      const adolescentesMatutino = users.filter(
+      const criancaMatutino = users.filter(
         (user) =>
-          user.idade >= 12 && user.idade <= 17 && user.turno === 'Matutino'
+          user.idade >= 6 && user.idade <= 11 && user.turno === 'Matutino'
       );
-      console.log(adolescentesMatutino);
+      console.log(criancaMatutino);
 
       const adolescentesVespertino = users.filter(
         (user) =>
-          user.idade >= 12 && user.idade <= 17 && user.turno === 'Vespertino'
+          user.idade >= 6 && user.idade <= 11 && user.turno === 'Vespertino'
       );
 
       this.setState({
-        adolescentesMatutino: adolescentesMatutino || '',
+        criancaMatutino: criancaMatutino || '',
         adolescentesVespertino: adolescentesVespertino || '',
       });
     } catch (error) {
@@ -64,7 +64,7 @@ export default class Relatorio1 extends Component {
     const {
       auth,
       loading,
-      adolescentesMatutino,
+      criancaMatutino,
       // adolescentesVespertino,
     } = this.state;
     return (
@@ -75,12 +75,12 @@ export default class Relatorio1 extends Component {
           <ClipLoader size={20} color="#7159c1" />
         ) : (
           <Container>
-            {adolescentesMatutino.length ? (
+            {criancaMatutino.length ? (
               <>
                 <h4>
                   USUÁRIOS MATRICULADOS TURNO MATUTINO SERVIÇOS DE CONVIVÊNCIA
                   DE FORTALECIMENTO DE VINCULOS SCFV {new Date().getFullYear()}{' '}
-                  - (12 a 17 anos)
+                  - (06 a 11 anos)
                 </h4>
                 <Table>
                   <Tr style={{ background: '#eeee' }}>
@@ -90,7 +90,7 @@ export default class Relatorio1 extends Component {
                     <th>CELULAR DO RESPONSAVEL</th>
                   </Tr>
 
-                  {adolescentesMatutino.map((user, index) => (
+                  {criancaMatutino.map((user, index) => (
                     <>
                       <Tr>
                         <Td>{index}</Td>

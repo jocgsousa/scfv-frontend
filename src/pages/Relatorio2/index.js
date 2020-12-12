@@ -86,6 +86,7 @@ export default class Relatorio1 extends Component {
                   <Tr style={{ background: '#eeee' }}>
                     <th>N.</th>
                     <th>NOME</th>
+                    <th>IDADE</th>
                     <th>CELULAR DO RESPONSAVEL</th>
                   </Tr>
 
@@ -94,6 +95,7 @@ export default class Relatorio1 extends Component {
                       <Tr>
                         <Td>{index}</Td>
                         <Td>{user.name}</Td>
+                        <Td>{user.idade}</Td>
                         <Td>
                           {user.contato
                             ? user.contato.tel_celular
