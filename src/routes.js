@@ -7,6 +7,7 @@ import Painel from './pages/Painel';
 import Register from './pages/Register';
 import Users from './pages/Users';
 import Ficha from './pages/Ficha';
+import FichaUser from './pages/FichaUser';
 import Encaminhamentos from './pages/Encaminhamentos';
 import Relatorio1 from './pages/Relatorio1';
 import Relatorio2 from './pages/Relatorio2';
@@ -21,6 +22,8 @@ export default function Routes() {
         <Route path="/painel" component={Painel} />
         <Route path="/register" component={Register} />
         <Route path="/ficha/:users" component={Ficha} />
+        <Route path="/f/:users" component={FichaUser} />
+
         <Route path="/users/" component={Users} />
         {/* Rotas para relatório */}
         <Route path="/relat1/" component={Relatorio1} />

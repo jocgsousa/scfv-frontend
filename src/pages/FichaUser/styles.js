@@ -108,9 +108,4 @@ export const ButtonSubmit = styled.button`
   outline: none;
 `;
 
-export const ButtonOption = styled.button`
-  border-radius: 4px;
-  border: 1px solid #7159c1;
-  background-color: #7159c1;
-  color: white;
-`;
+export const Img = styled.img``;

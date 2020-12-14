@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BsFileEarmarkText } from 'react-icons/bs';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -13,6 +14,7 @@ import {
   ContainerUser,
   Op,
   ButtonSubmit,
+  ButtonOption,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -638,6 +640,15 @@ export default class Ficha extends Component {
                     <div className="col-md-12">
                       <h5>Informaçoes pessoais: {user.name}</h5>
                       <hr />
+                      <Link to={`/f/${encodeURIComponent(user.id)}`}>
+                        <ButtonOption className="btn btn-primary">
+                          Gerar ficha
+                          <BsFileEarmarkText
+                            size={20}
+                            style={{ marginLeft: '10px' }}
+                          />
+                        </ButtonOption>
+                      </Link>
                     </div>
                     <ContainerUser className="col-md-12">
                       <div className="row">
