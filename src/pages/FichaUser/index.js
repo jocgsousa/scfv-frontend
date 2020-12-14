@@ -120,7 +120,7 @@ export default class FichaUser extends Component {
               <>
                 <br />
                 <center>
-                  <table className="table col-md-10">
+                  <table className="table col-md-12">
                     <tr>
                       <td className="col-md-4">
                         <Img
@@ -168,13 +168,13 @@ export default class FichaUser extends Component {
                 <div className="row" style={{ marginTop: '10px' }}>
                   <div
                     className="col-md-12"
-                    style={{ width: '80%', margin: '0 auto' }}
+                    style={{ width: '100%', margin: '0 auto' }}
                   >
                     <strong>CRAS: BELA-VISTA</strong>
                     <br />
                     <br />
-                    <h3>Identificação</h3>
-                    <hr />
+                    <h5>Identificação</h5>
+
                     <strong>PAIF:</strong>
                     <br />
                     <br />
@@ -194,6 +194,49 @@ export default class FichaUser extends Component {
                         </td>
                         <td>
                           <strong>CPF:</strong> {user.cpf}
+                        </td>
+                      </tr>
+                    </Table>
+                    <h5>Dados do Responsável</h5>
+
+                    <Table>
+                      <tr>
+                        <td>
+                          <strong>RG:</strong> {user.rg_resp}
+                        </td>
+
+                        <td>
+                          <strong>DATA DE NASCIMENTO:</strong>
+                          {user.formatedDate}
+                        </td>
+                        <td>
+                          <strong>NATURALIDADE:</strong>
+                          {user.naturalidade}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan="3">
+                          <strong>NOME DA MÃE:</strong>
+                          {user.name_mae}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td colSpan="3">
+                          <strong>NOME DO RESPONSÁVEL PELA FAMILIA:</strong>
+                          {user.name_resp}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <strong>CPF RESPONSÁVEL:</strong>
+                          {user.cpf_resp}
+                        </td>
+
+                        <td colSpan="3">
+                          <strong>RG RESPONSÁVEL:</strong>
+                          {user.rg_resp}
                         </td>
                       </tr>
                     </Table>

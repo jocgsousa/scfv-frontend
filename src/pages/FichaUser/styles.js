@@ -114,6 +114,7 @@ export const Table = styled.table.attrs({
   className: 'table',
 })`
   td,
+  tr,
   th {
     border: 1px solid black;
     padding: 10px;
