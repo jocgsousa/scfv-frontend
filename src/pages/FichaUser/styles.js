@@ -109,3 +109,13 @@ export const ButtonSubmit = styled.button`
 `;
 
 export const Img = styled.img``;
+
+export const Table = styled.table.attrs({
+  className: 'table',
+})`
+  td,
+  th {
+    border: 1px solid black;
+    padding: 10px;
+  }
+`;

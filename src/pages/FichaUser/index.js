@@ -8,6 +8,7 @@ import api from '../../services/api';
 import {
   ContainerLoader,
   Img,
+  Table,
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
 
@@ -89,7 +90,7 @@ export default class FichaUser extends Component {
       loading,
       autenticated,
       // dados do usuário
-      // user,
+      user,
     } = this.state;
 
     return (
@@ -98,7 +99,13 @@ export default class FichaUser extends Component {
 
         <div
           className="container"
-          style={{ width: '60%', margin: '0 auto', height: '100%' }}
+          style={{
+            width: '100%',
+            margin: '0 auto',
+            height: '1000px',
+            position: 'relative',
+            top: '20px',
+          }}
         >
           <div className="row">
             {loading ? (
@@ -112,37 +119,85 @@ export default class FichaUser extends Component {
             ) : (
               <>
                 <br />
-                <div className="col-md-6">
-                  <Img
-                    src={Logo1}
-                    style={{
-                      width: '120px',
-                      float: 'left',
-                      marginTop: '15px',
-                    }}
-                  />
-                </div>
-                <div className="col-md12">
-                  <Img
-                    src={Logo2}
-                    style={{
-                      width: '100px',
-                      float: 'right',
-                    }}
-                  />
-                </div>
+                <center>
+                  <table className="table col-md-10">
+                    <tr>
+                      <td className="col-md-4">
+                        <Img
+                          src={Logo1}
+                          style={{
+                            width: '120px',
+                            float: 'left',
+                          }}
+                        />
+                      </td>
 
-                <div className="row" style={{ marginTop: '80px' }}>
-                  <center>
-                    <strong>PREFEITURA MUNICIPAL DE MARABA</strong>
+                      <td className="col-md-4">
+                        <center>
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                          <strong style={{ fontSize: '15px' }}>
+                            PREFEITURA MUNICIPAL DE MARABA
+                          </strong>
+                          <br />
+                          <strong>
+                            Secretaria de Assistência Social da Prefeitura
+                          </strong>
+                          <br />
+                          <br />
+                          <strong>FICHA CADASTRAL - SCFV</strong>
+                        </center>
+                      </td>
+
+                      <td className="col-md-4">
+                        <Img
+                          src={Logo2}
+                          style={{
+                            width: '100px',
+                            float: 'right',
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </center>
+
+                <div className="row" style={{ marginTop: '10px' }}>
+                  <div
+                    className="col-md-12"
+                    style={{ width: '80%', margin: '0 auto' }}
+                  >
+                    <strong>CRAS: BELA-VISTA</strong>
                     <br />
-                    <strong>
-                      Secretaria de Assistência Social da Prefeitura
-                    </strong>
+                    <br />
+                    <h3>Identificação</h3>
+                    <hr />
+                    <strong>PAIF:</strong>
                     <br />
                     <br />
-                    <strong>FICHA CADASTRAL - SCFV</strong>
-                  </center>
+
+                    <Table>
+                      <tr>
+                        <td colSpan="3">
+                          <strong>NOME:</strong> {user.name}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>SEXO:</strong> {user.sexo}
+                        </td>
+                        <td>
+                          <strong>NIS:</strong> {user.nis}
+                        </td>
+                        <td>
+                          <strong>CPF:</strong> {user.cpf}
+                        </td>
+                      </tr>
+                    </Table>
+                  </div>
                 </div>
               </>
             )}
