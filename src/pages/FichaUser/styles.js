@@ -8,7 +8,7 @@ export const Container = styled.div`
   background-color: #ffff;
 
   @media print {
-    body {
+    .button {
       display: none;
     }
   }

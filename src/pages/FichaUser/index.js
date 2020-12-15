@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { FaPrint } from 'react-icons/fa';
+import { FaPrint, FaArrowLeft } from 'react-icons/fa';
 
 // import { HorizontalBar, Doughnut } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -11,6 +11,7 @@ import {
   Img,
   Table,
   Button,
+  Container,
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
 
@@ -108,9 +109,18 @@ export default class FichaUser extends Component {
             ) : (
               <>
                 <br />
-                <Button onClick={() => window.print()}>
-                  Imprimir <FaPrint />
-                </Button>
+                <Container>
+                  <Link to={`/ficha/${encodeURIComponent(user.id)}`}>
+                    <Button>
+                      Voltar <FaArrowLeft />
+                    </Button>
+                  </Link>
+
+                  <Button onClick={() => window.print()}>
+                    Imprimir <FaPrint />
+                  </Button>
+                </Container>
+
                 <center>
                   <table className="table col-md-12">
                     <tr>
@@ -152,6 +162,7 @@ export default class FichaUser extends Component {
                           style={{
                             width: '120px',
                             float: 'right',
+                            marginTop: '-10px',
                           }}
                         />
                       </td>
