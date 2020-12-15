@@ -22,34 +22,8 @@ export default class FichaUser extends Component {
     token: '',
     user: [],
     autenticated: true,
-    // dados da ficha do usuário
-    paifUser: '',
-    nisUser: '',
-    cpfUser: '',
-    rgUser: '',
-    naturalidade: '',
-    nameMae: '',
-    nameResp: '',
-    cpfResp: '',
-    rgResp: '',
-    situacao: '',
-    emailUser: '',
-    dataUser: '',
-    sexoUser: '',
-    turno: '',
-    // Dados de endereco
-    cep: '',
-    endereco: false,
-    bairro: '',
-    rua: '',
-    cidade: '',
-    estado: '',
-    numero: '',
-    referencia: '',
-    // Dados de contato
-    telFixo: '',
-    telCel: '',
-    telCel2: '',
+    // Faixa
+    faixa: '',
   };
 
   async componentDidMount() {
@@ -78,12 +52,24 @@ export default class FichaUser extends Component {
         user: response.data,
       });
       // alert('Dados Carregados com sucesso!');
-      console.log(response.data);
+      this.checkFaixa(response.data.idade);
     } catch (error) {
       alert('Usuário não existe ');
       <Redirect to="/painel" />;
     }
   }
+
+  checkFaixa = (idade) => {
+    if (idade <= 11) {
+      this.setState({ faixa: '6 a 12 anos - CRIANÇAS' });
+    }
+    if (idade >= 12 && idade <= 17) {
+      this.setState({ faixa: '12 a 17 anos - ADOLESCENTES' });
+    }
+    if (idade > 17) {
+      this.setState({ faixa: 'Maior de 18 - ADULTOS' });
+    }
+  };
 
   render() {
     const {
@@ -91,6 +77,7 @@ export default class FichaUser extends Component {
       autenticated,
       // dados do usuário
       user,
+      faixa,
     } = this.state;
 
     return (
@@ -102,7 +89,7 @@ export default class FichaUser extends Component {
           style={{
             width: '100%',
             margin: '0 auto',
-            height: '1000px',
+            height: '1500px',
             position: 'relative',
             top: '20px',
           }}
@@ -126,7 +113,7 @@ export default class FichaUser extends Component {
                         <Img
                           src={Logo1}
                           style={{
-                            width: '120px',
+                            width: '150px',
                             float: 'left',
                           }}
                         />
@@ -139,7 +126,7 @@ export default class FichaUser extends Component {
                           <br />
                           <br />
                           <br />
-                          <strong style={{ fontSize: '15px' }}>
+                          <strong style={{ fontSize: '18px' }}>
                             PREFEITURA MUNICIPAL DE MARABA
                           </strong>
                           <br />
@@ -147,8 +134,10 @@ export default class FichaUser extends Component {
                             Secretaria de Assistência Social da Prefeitura
                           </strong>
                           <br />
-                          <br />
-                          <strong>FICHA CADASTRAL - SCFV</strong>
+
+                          <strong style={{ fontSize: '18px' }}>
+                            FICHA CADASTRAL - SCFV
+                          </strong>
                         </center>
                       </td>
 
@@ -156,7 +145,7 @@ export default class FichaUser extends Component {
                         <Img
                           src={Logo2}
                           style={{
-                            width: '100px',
+                            width: '120px',
                             float: 'right',
                           }}
                         />
@@ -172,16 +161,15 @@ export default class FichaUser extends Component {
                   >
                     <strong>CRAS: BELA-VISTA</strong>
                     <br />
+
+                    <strong>PAIF: </strong>
+                    <u>{user.paif ? user.paif : 'S/D'}</u>
                     <br />
+
                     <h5>Identificação</h5>
-
-                    <strong>PAIF:</strong>
-                    <br />
-                    <br />
-
                     <Table>
                       <tr>
-                        <td colSpan="3">
+                        <td colSpan="4">
                           <strong>NOME:</strong> {user.name}
                         </td>
                       </tr>
@@ -195,10 +183,12 @@ export default class FichaUser extends Component {
                         <td>
                           <strong>CPF:</strong> {user.cpf}
                         </td>
+                        <td>
+                          <strong>IDADE:</strong> {user.idade}
+                        </td>
                       </tr>
                     </Table>
                     <h5>Dados do Responsável</h5>
-
                     <Table>
                       <tr>
                         <td>
@@ -207,7 +197,7 @@ export default class FichaUser extends Component {
 
                         <td>
                           <strong>DATA DE NASCIMENTO:</strong>
-                          {user.formatedDate}
+                          {user.dataNascimento}
                         </td>
                         <td>
                           <strong>NATURALIDADE:</strong>
@@ -237,6 +227,90 @@ export default class FichaUser extends Component {
                         <td colSpan="3">
                           <strong>RG RESPONSÁVEL:</strong>
                           {user.rg_resp}
+                        </td>
+                      </tr>
+                    </Table>
+                    <h5>Dados de contato</h5>
+                    <Table>
+                      <tr>
+                        <td>
+                          <strong>Telefone Fixo:</strong>
+                          {user.contato ? user.contato.tel_fixo : 'S/N'}
+                        </td>
+                        <td>
+                          <strong>Telefone Celular I:</strong>
+                          {user.contato ? user.contato.tel_celular : 'S/N'}
+                        </td>
+                        <td>
+                          <strong>Telefone Celular II:</strong>
+                          {user.contato ? user.contato.tel_celular2 : 'S/N'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan="3">
+                          <strong>E-mail:</strong> {user.email}
+                        </td>
+                      </tr>
+                    </Table>
+                    <h5>Dados de Endereço</h5>
+                    <Table>
+                      <tr>
+                        <td>
+                          <strong>CEP:</strong>
+                          {user.endereco ? user.endereco.cep : 'S/D'}
+                        </td>
+                        <td>
+                          <strong>Rua:</strong>
+                          {user.endereco ? user.endereco.rua : 'S/D'}
+                        </td>
+                        <td>
+                          <strong>Bairro:</strong>
+                          {user.endereco ? user.endereco.bairro : 'S/D'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Nº:</strong>
+                          {user.endereco ? user.endereco.numero : 'S/D'}
+                        </td>
+                        <td colSpan="2">
+                          <strong>Referência:</strong>
+                          {user.endereco ? user.endereco.referencia : 'S/D'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Cidade:</strong>
+                          {user.endereco ? user.endereco.cidade : 'S/D'}
+                        </td>
+                        <td colSpan="2">
+                          <strong>Estado:</strong>
+                          {user.endereco ? user.endereco.estado : 'S/D'}
+                        </td>
+                      </tr>
+                    </Table>
+                    <br />
+                    <br />
+                    <h5>Situação do usuário</h5>
+                    <Table>
+                      <tr>
+                        <td>
+                          <strong>Situação:</strong>
+                          {user.situacao ? user.situacao : 'S/D'}
+                        </td>
+                      </tr>
+                    </Table>
+
+                    <h5>Grupo SCFV</h5>
+                    <Table>
+                      <tr>
+                        <td>
+                          <strong>Faixa etária:</strong>
+                          {faixa}
+                        </td>
+                        <td>
+                          <strong>Turno:</strong>
+                          {user.turno ? user.turno : 'TURNO NÃO INFORMADO'}
                         </td>
                       </tr>
                     </Table>
