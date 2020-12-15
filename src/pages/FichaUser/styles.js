@@ -6,6 +6,12 @@ export const Container = styled.div`
   flex-wrap: nowrap; /* default value; can be omitted */
   justify-content: space-between; /* switched from default (flex-start, see below) */
   background-color: #ffff;
+
+  @media print {
+    body {
+      display: none;
+    }
+  }
 `;
 
 export const Header = styled.div`
@@ -119,4 +125,15 @@ export const Table = styled.table.attrs({
     border: 1px solid black;
     padding: 10px;
   }
+`;
+
+export const Button = styled.button.attrs({
+  className: ' button',
+})`
+  width: 100px;
+  height: 40px;
+  background: #7159c1;
+  color: white;
+  border-radius: 4px;
+  border: 1px solid #7159c1;
 `;

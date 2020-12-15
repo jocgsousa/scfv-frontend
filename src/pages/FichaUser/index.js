@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FaPrint } from 'react-icons/fa';
 
 // import { HorizontalBar, Doughnut } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -9,6 +10,7 @@ import {
   ContainerLoader,
   Img,
   Table,
+  Button,
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
 
@@ -106,6 +108,9 @@ export default class FichaUser extends Component {
             ) : (
               <>
                 <br />
+                <Button onClick={() => window.print()}>
+                  Imprimir <FaPrint />
+                </Button>
                 <center>
                   <table className="table col-md-12">
                     <tr>
