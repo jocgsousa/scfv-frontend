@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import InputMask from 'react-input-mask';
 
 export const Container = styled.div`
   display: flex; /* establish flex container */
@@ -107,11 +108,10 @@ export const InputPhone = styled.input.attrs({
   type: 'tel',
 })``;
 
-export const InputCPF = styled.input.attrs({
+export const InputCPF = styled(InputMask).attrs({
   className: 'form-control',
-  placeholder: 'CPF',
   type: 'text',
-  maxlength: '11',
+  mask: '999.999.999-99',
 })``;
 
 export const InputDate = styled.input.attrs({

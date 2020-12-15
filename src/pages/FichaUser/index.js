@@ -3,6 +3,8 @@ import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FaPrint, FaArrowLeft } from 'react-icons/fa';
 
+// import path from 'path';
+
 // import { HorizontalBar, Doughnut } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
 import api from '../../services/api';
@@ -235,7 +237,7 @@ export default class FichaUser extends Component {
                       </tr>
 
                       <tr>
-                        <td>
+                        <td colSpan="2">
                           <strong>CPF RESPONSÁVEL:</strong>
                           {user.cpf_resp}
                         </td>
@@ -254,11 +256,11 @@ export default class FichaUser extends Component {
                           {user.contato ? user.contato.tel_fixo : 'S/N'}
                         </td>
                         <td>
-                          <strong>Telefone Celular I:</strong>
+                          <strong>Celular I:</strong>
                           {user.contato ? user.contato.tel_celular : 'S/N'}
                         </td>
                         <td>
-                          <strong>Telefone Celular II:</strong>
+                          <strong>Celular II:</strong>
                           {user.contato ? user.contato.tel_celular2 : 'S/N'}
                         </td>
                       </tr>

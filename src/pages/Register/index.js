@@ -9,6 +9,7 @@ import {
   ContainerLoader,
   ButtonLogout,
   ButtonSubmit,
+  InputCPF,
 } from './styles';
 
 export default class Register extends Component {
@@ -165,7 +166,7 @@ export default class Register extends Component {
       turno !== ''
     ) {
       this.setState({ loadingRegister: true });
-      alert('Todos os campos foram preenchidos');
+
       const beareToken = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -325,17 +326,14 @@ export default class Register extends Component {
                         <input
                           className="form-control"
                           onChange={this.handleNIS}
+                          maxLength="11"
                           value={nisUser}
                         />
                       </div>
 
                       <div className="col-md-6">
                         <span>CPF:</span>
-                        <input
-                          className="form-control"
-                          onChange={this.handleCPF}
-                          value={cpfUser}
-                        />
+                        <InputCPF onChange={this.handleCPF} value={cpfUser} />
                       </div>
 
                       <div className="col-md-6">
@@ -346,6 +344,7 @@ export default class Register extends Component {
                           className="form-control"
                           onChange={this.handleRG}
                           value={rgUser}
+                          maxLength="7"
                         />
                       </div>
 
@@ -401,7 +400,7 @@ export default class Register extends Component {
                         <span>
                           CPF Responsável: <i style={{ color: 'red' }}>*</i>
                         </span>
-                        <input
+                        <InputCPF
                           className="form-control"
                           onChange={this.handleCPFREsp}
                           value={cpfResp}
@@ -416,6 +415,7 @@ export default class Register extends Component {
                           className="form-control"
                           onChange={this.handleRGResp}
                           value={rgResp}
+                          maxLength="7"
                         />
                       </div>
 

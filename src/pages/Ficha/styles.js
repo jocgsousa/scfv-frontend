@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import InputMask from 'react-input-mask';
 
 export const Container = styled.div`
   display: flex; /* establish flex container */
@@ -114,3 +115,15 @@ export const ButtonOption = styled.button`
   background-color: #7159c1;
   color: white;
 `;
+
+export const InputCPF = styled(InputMask).attrs({
+  className: 'form-control',
+  type: 'text',
+  mask: '999.999.999-99',
+})``;
+
+export const InputPhone = styled(InputMask).attrs({
+  className: 'form-control',
+  type: 'tel',
+  mask: '(99) 9 9999-9999',
+})``;

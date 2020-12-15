@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BsFileEarmarkText } from 'react-icons/bs';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import cepSearch from 'cep-promise';
 
 // import { HorizontalBar, Doughnut } from 'react-chartjs-2';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -15,6 +16,8 @@ import {
   Op,
   ButtonSubmit,
   ButtonOption,
+  InputCPF,
+  InputPhone,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -247,6 +250,22 @@ export default class Ficha extends Component {
   // Tratativa dos dados de endereco do usuário
   handleCep = (e) => {
     this.setState({ cep: e.target.value });
+
+    if (e.target.value.length > 7) {
+      cepSearch(e.target.value)
+        .then((data) => {
+          this.setState({
+            cep: data.cep,
+            cidade: data.city,
+            bairro: data.neighborhood,
+            estado: data.state,
+            rua: data.street,
+          });
+        })
+        .catch(() => {
+          alert('Endereço de CEP não encontrado');
+        });
+    }
   };
 
   handleBairro = (e) => {
@@ -682,7 +701,7 @@ export default class Ficha extends Component {
 
                             <div className="col-md-6">
                               <span>CPF:</span>
-                              <input
+                              <InputCPF
                                 className="form-control"
                                 onChange={this.handleCPF}
                                 value={cpfUser}
@@ -695,6 +714,7 @@ export default class Ficha extends Component {
                                 className="form-control"
                                 onChange={this.handleRG}
                                 value={rgUser}
+                                maxLength="7"
                               />
                             </div>
 
@@ -740,7 +760,7 @@ export default class Ficha extends Component {
 
                             <div className="col-md-6">
                               <span>CPF Responsável:</span>
-                              <input
+                              <InputCPF
                                 className="form-control"
                                 onChange={this.handleCPFREsp}
                                 value={cpfResp}
@@ -753,6 +773,7 @@ export default class Ficha extends Component {
                                 className="form-control"
                                 onChange={this.handleRGResp}
                                 value={rgResp}
+                                maxLength="7"
                               />
                             </div>
 
@@ -879,6 +900,7 @@ export default class Ficha extends Component {
                                 className="form-control"
                                 onChange={this.handleCep}
                                 value={cep}
+                                maxLength="8"
                               />
                             </div>
 
@@ -970,7 +992,7 @@ export default class Ficha extends Component {
                           <div className="row">
                             <div className="col-md-12">
                               <span>Telefone fixo:</span>
-                              <input
+                              <InputPhone
                                 className="form-control"
                                 onChange={this.handleTelFixo}
                                 value={telFixo}
@@ -979,7 +1001,7 @@ export default class Ficha extends Component {
 
                             <div className="col-md-12">
                               <span>Telefone celular:</span>
-                              <input
+                              <InputPhone
                                 className="form-control"
                                 onChange={this.handleTelCel}
                                 value={telCel}
@@ -988,7 +1010,7 @@ export default class Ficha extends Component {
 
                             <div className="col-md-12">
                               <span>Telefone Celular:</span>
-                              <input
+                              <InputPhone
                                 className="form-control"
                                 onChange={this.handleTelCel2}
                                 value={telCel2}
