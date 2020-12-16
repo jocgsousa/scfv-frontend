@@ -101,7 +101,7 @@ export default class Encaminhamentos extends Component {
                 <Option>Novo Registro</Option>
               </Link>
               <Link to="/encaminhamentos">
-                <Option>Encaminhamentos</Option>
+                <Option style={{ color: 'red' }}>Encaminhamentos</Option>
               </Link>
             </div>
 

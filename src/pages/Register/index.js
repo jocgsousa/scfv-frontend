@@ -278,7 +278,7 @@ export default class Register extends Component {
                 <Option>Usuários</Option>
               </Link>
               <Link to="/register">
-                <Option>Novo Registro</Option>
+                <Option style={{ color: 'red' }}>Novo Registro</Option>
               </Link>
               <Link to="/encaminhamentos">
                 <Option>Encaminhamentos</Option>

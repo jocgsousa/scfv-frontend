@@ -332,6 +332,44 @@ export default class FichaUser extends Component {
                         </td>
                       </tr>
                     </Table>
+
+                    <h5>Cursos - realizados</h5>
+                    <Table>
+                      {user.cursos
+                        ? user.cursos.map((curso) => (
+                            <>
+                              <tr>
+                                <td>
+                                  <strong>Nome do curso :</strong>
+                                  {curso.name}
+                                </td>
+                                <td>
+                                  <strong>Início :</strong>
+                                  {curso.inicio}
+                                  <strong>Final :</strong>
+                                  {curso.fim}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <strong>Duração do curso :</strong>
+                                  {curso.dias
+                                    ? ` ${curso.dias} dias`
+                                    : 'CURSO FINALIZADO'}
+                                </td>
+
+                                <td>
+                                  <strong>Início :</strong>
+                                  {curso.inicio}
+                                  <strong>Final :</strong>
+                                  {curso.fim}
+                                </td>
+                              </tr>
+                              <br />
+                            </>
+                          ))
+                        : 'Sem cursos cadastrados para este aluno'}
+                    </Table>
                   </div>
                 </div>
               </>

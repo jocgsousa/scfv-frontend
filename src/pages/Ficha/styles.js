@@ -7,6 +7,7 @@ export const Container = styled.div`
   flex-wrap: nowrap; /* default value; can be omitted */
   justify-content: space-between; /* switched from default (flex-start, see below) */
   background-color: #ffff;
+  margin-bottom: 200px;
 `;
 
 export const Header = styled.div`

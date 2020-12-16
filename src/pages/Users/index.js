@@ -161,7 +161,7 @@ export default class Users extends Component {
                 <Option>Painel</Option>
               </Link>
               <Link to="/users">
-                <Option>Usuários</Option>
+                <Option style={{ color: 'red' }}>Usuários</Option>
               </Link>
               <Link to="/register">
                 <Option>Novo Registro</Option>

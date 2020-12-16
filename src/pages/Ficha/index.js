@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BsFileEarmarkText } from 'react-icons/bs';
+import { BsFileEarmarkText, BsFillTrashFill } from 'react-icons/bs';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cepSearch from 'cep-promise';
@@ -18,6 +18,7 @@ import {
   ButtonOption,
   InputCPF,
   InputPhone,
+  Container,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -71,6 +72,13 @@ export default class Ficha extends Component {
     telFixo: '',
     telCel: '',
     telCel2: '',
+    // Dados dos cursos que ele participa
+    loadingRegisterCurso: false,
+    cursos: [],
+    nameCurso: '',
+    localCurso: '',
+    inicioCurso: '',
+    fimCurso: '',
   };
 
   async componentDidMount() {
@@ -95,6 +103,13 @@ export default class Ficha extends Component {
           Authorization: `Bearer ${key}`,
         },
       });
+
+      const responseCursos = await api.get(`/cursos/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${key}`,
+        },
+      });
+
       this.setState({
         loading: false,
         // Dados do usuário
@@ -136,6 +151,7 @@ export default class Ficha extends Component {
         telCel2: response.data.contato
           ? response.data.contato.tel_celular2
           : null,
+        cursos: responseCursos.data,
       });
     } catch (error) {
       alert('Usuário não existe ');
@@ -302,6 +318,22 @@ export default class Ficha extends Component {
 
   handleTelCel2 = (e) => {
     this.setState({ telCel2: e.target.value });
+  };
+
+  handleNameCurso = (e) => {
+    this.setState({ nameCurso: e.target.value });
+  };
+
+  handleLocalCurso = (e) => {
+    this.setState({ localCurso: e.target.value });
+  };
+
+  handleInicioCurso = (e) => {
+    this.setState({ inicioCurso: e.target.value });
+  };
+
+  handleFimCurso = (e) => {
+    this.setState({ fimCurso: e.target.value });
   };
 
   updateUser = async (e) => {
@@ -572,6 +604,74 @@ export default class Ficha extends Component {
     }
   };
 
+  registerCurso = async (e) => {
+    e.preventDefault();
+
+    const {
+      user,
+      token,
+      nameCurso,
+      localCurso,
+      inicioCurso,
+      fimCurso,
+      cursos,
+    } = this.state;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const object = {
+      name: nameCurso,
+      date_init: inicioCurso,
+      date_finalized: fimCurso,
+      orgao: localCurso,
+      complete: false,
+      duration: ' ',
+    };
+    // Requisição para registrar o curso
+    if (
+      nameCurso !== '' &&
+      localCurso !== '' &&
+      inicioCurso !== '' &&
+      fimCurso !== ''
+    ) {
+      this.setState({ loadingRegisterCurso: true });
+
+      try {
+        const response = await api.post(`/cursos/${user.id}`, object, config);
+        console.log(response);
+        this.setState({
+          loadingRegisterCurso: false,
+          cursos: [...cursos, response.data],
+        });
+      } catch (error) {
+        console.log(error.response.data.error);
+        this.setState({ loadingRegisterCurso: false });
+      }
+    } else {
+      alert('Por favor informe todos os dados para registro do curso');
+    }
+  };
+
+  deletarCurso = async (e) => {
+    alert(e);
+    const { token, cursos } = this.state;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      await api.delete(`/cursos/${e}`, config);
+      const newCursos = cursos.filter((curso) => curso.id !== e);
+      this.setState({ cursos: newCursos });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   render() {
     const {
       username,
@@ -615,6 +715,14 @@ export default class Ficha extends Component {
       telFixo,
       telCel,
       telCel2,
+
+      // states of courses
+      cursos,
+      loadingRegisterCurso,
+      nameCurso,
+      localCurso,
+      inicioCurso,
+      fimCurso,
     } = this.state;
 
     return (
@@ -627,7 +735,7 @@ export default class Ficha extends Component {
         <br />
         <br />
         <br />
-        <div className="container">
+        <Container className="container">
           <div className="row">
             <div className="col-md-3">
               <Link to="/painel">
@@ -1048,6 +1156,85 @@ export default class Ficha extends Component {
                             </div>
                           </div>
                         </form>
+
+                        <h5>Cadastrar curso</h5>
+                        <hr />
+
+                        <div className="row">
+                          <div className="col-md-12">
+                            <span>Nome do curso:</span>
+                            <input
+                              className="form-control"
+                              onChange={this.handleNameCurso}
+                              value={nameCurso}
+                            />
+                          </div>
+
+                          <div className="col-md-12">
+                            <span>Local:</span>
+                            <input
+                              className="form-control"
+                              onChange={this.handleLocalCurso}
+                              value={localCurso}
+                            />
+                          </div>
+
+                          <div className="col-md-12">
+                            <span>Data de início :</span>
+                            <input
+                              className="form-control"
+                              onChange={this.handleInicioCurso}
+                              value={inicioCurso}
+                              type="date"
+                            />
+                          </div>
+                          <div className="col-md-12">
+                            <span>Date de finalização:</span>
+                            <input
+                              className="form-control"
+                              onChange={this.handleFimCurso}
+                              value={fimCurso}
+                              type="date"
+                            />
+                          </div>
+                          <div className="col-md-12">
+                            <>
+                              <ButtonSubmit onClick={this.registerCurso}>
+                                {loadingRegisterCurso ? (
+                                  <ClipLoader size={20} color="#FFFF" />
+                                ) : (
+                                  'Cadastrar curso'
+                                )}
+                              </ButtonSubmit>
+                            </>
+                          </div>
+                        </div>
+
+                        <div
+                          className="col-md-12 border"
+                          style={{
+                            overflowY: 'scroll',
+                            height: '200px',
+                            padding: '20px',
+                          }}
+                        >
+                          {cursos
+                            ? cursos.map((curso) => (
+                                <div
+                                  key={curso.id}
+                                  className="border"
+                                  style={{ padding: '5px' }}
+                                >
+                                  <span>{curso.name}</span>
+                                  <ButtonOption
+                                    onClick={() => this.deletarCurso(curso.id)}
+                                  >
+                                    <BsFillTrashFill size={10} />
+                                  </ButtonOption>
+                                </div>
+                              ))
+                            : 'Sem cursos cadasstrados'}
+                        </div>
                       </div>
                     </ContainerUser>
                   </div>
@@ -1055,7 +1242,7 @@ export default class Ficha extends Component {
               )}
             </div>
           </div>
-        </div>
+        </Container>
       </>
     );
   }

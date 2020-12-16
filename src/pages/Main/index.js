@@ -45,7 +45,11 @@ export default class Main extends Component {
 
         this.setState({ loading: false, redirect: true });
       } catch (error) {
-        alert(error.response.data.error);
+        alert(
+          error.response.data.error
+            ? error.response.data.error
+            : 'Banco de dados indísponivel'
+        );
         this.setState({ loading: false });
       }
     }
