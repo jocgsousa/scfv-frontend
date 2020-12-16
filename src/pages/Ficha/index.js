@@ -640,7 +640,7 @@ export default class Ficha extends Component {
 
       try {
         const response = await api.post(`/cursos/${user.id}`, object, config);
-        console.log(response);
+
         this.setState({
           loadingRegisterCurso: false,
           cursos: [...cursos, response.data],
@@ -655,7 +655,6 @@ export default class Ficha extends Component {
   };
 
   deletarCurso = async (e) => {
-    alert(e);
     const { token, cursos } = this.state;
     const config = {
       headers: {
@@ -1218,22 +1217,32 @@ export default class Ficha extends Component {
                             padding: '20px',
                           }}
                         >
-                          {cursos
-                            ? cursos.map((curso) => (
-                                <div
-                                  key={curso.id}
-                                  className="border"
-                                  style={{ padding: '5px' }}
+                          {cursos.length ? (
+                            cursos.map((curso) => (
+                              <div
+                                key={curso.id}
+                                className="border"
+                                style={{ padding: '5px' }}
+                              >
+                                <span>{curso.name}</span>
+                                <ButtonOption
+                                  onClick={() => this.deletarCurso(curso.id)}
+                                  style={{ float: 'right', width: '20px' }}
                                 >
-                                  <span>{curso.name}</span>
-                                  <ButtonOption
-                                    onClick={() => this.deletarCurso(curso.id)}
-                                  >
-                                    <BsFillTrashFill size={10} />
-                                  </ButtonOption>
-                                </div>
-                              ))
-                            : 'Sem cursos cadasstrados'}
+                                  <BsFillTrashFill size={10} />
+                                </ButtonOption>
+                              </div>
+                            ))
+                          ) : (
+                            <>
+                              <div
+                                className="border"
+                                style={{ padding: '5px' }}
+                              >
+                                Este aluno não possui cursos cadastrados!
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     </ContainerUser>

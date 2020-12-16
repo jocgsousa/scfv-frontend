@@ -26,6 +26,8 @@ export default class FichaUser extends Component {
     loading: false,
     token: '',
     user: [],
+    cursos: [],
+
     autenticated: true,
     // Faixa
     faixa: '',
@@ -55,6 +57,7 @@ export default class FichaUser extends Component {
         loading: false,
         // Dados do usuário
         user: response.data,
+        cursos: response.data.cursos ? response.data.cursos : null,
       });
       // alert('Dados Carregados com sucesso!');
       this.checkFaixa(response.data.idade);
@@ -83,6 +86,7 @@ export default class FichaUser extends Component {
       // dados do usuário
       user,
       faixa,
+      cursos,
     } = this.state;
 
     return (
@@ -335,40 +339,50 @@ export default class FichaUser extends Component {
 
                     <h5>Cursos - realizados</h5>
                     <Table>
-                      {user.cursos
-                        ? user.cursos.map((curso) => (
-                            <>
-                              <tr>
-                                <td>
-                                  <strong>Nome do curso :</strong>
-                                  {curso.name}
-                                </td>
-                                <td>
-                                  <strong>Início :</strong>
-                                  {curso.inicio}
-                                  <strong>Final :</strong>
-                                  {curso.fim}
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <strong>Duração do curso :</strong>
-                                  {curso.dias
-                                    ? ` ${curso.dias} dias`
-                                    : 'CURSO FINALIZADO'}
-                                </td>
+                      {cursos.length ? (
+                        cursos.map((curso) => (
+                          <>
+                            <tr>
+                              <td>
+                                <strong>Nome do curso :</strong>
+                                {curso.name}
+                              </td>
+                              <td>
+                                <strong>Início :</strong>
+                                {curso.inicio}
+                                <strong>Final :</strong>
+                                {curso.fim}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>Duração do curso :</strong>
+                                {curso.dias
+                                  ? ` ${curso.dias} dias`
+                                  : 'CURSO FINALIZADO'}
+                              </td>
 
-                                <td>
-                                  <strong>Início :</strong>
-                                  {curso.inicio}
-                                  <strong>Final :</strong>
-                                  {curso.fim}
-                                </td>
-                              </tr>
-                              <br />
-                            </>
-                          ))
-                        : 'Sem cursos cadastrados para este aluno'}
+                              <td>
+                                <strong>Início :</strong>
+                                {curso.inicio}
+                                <strong>Final :</strong>
+                                {curso.fim}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colSpan="2">
+                                <strong>Local do curso:</strong>
+                                {curso.orgao ? curso.orgao : 'SEM/LOCAL'}
+                              </td>
+                            </tr>
+                            <br />
+                          </>
+                        ))
+                      ) : (
+                        <tr>
+                          <td>O Aluno não possui cursos cadastrados</td>
+                        </tr>
+                      )}
                     </Table>
                   </div>
                 </div>
