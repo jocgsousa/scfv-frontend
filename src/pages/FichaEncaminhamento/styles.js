@@ -6,6 +6,13 @@ export const Container = styled.div`
   flex-wrap: nowrap; /* default value; can be omitted */
   justify-content: space-between; /* switched from default (flex-start, see below) */
   background-color: #ffff;
+
+  @media print {
+    .button {
+      display: none;
+    }
+    font-size: 10px;
+  }
 `;
 
 export const Header = styled.div`
@@ -90,62 +97,45 @@ export const ButtonLogout = styled.button.attrs({
   bottom: 4px;
 `;
 
-export const Options = styled.select.attrs({
-  className: 'form-control',
+export const ContainerUser = styled.div.attrs({
+  className: 'col-md-5',
 })``;
 
 export const Op = styled.option``;
 
-export const InputDate = styled.input.attrs({
-  typ: 'text',
-  className: 'form-control',
-  type: 'date',
-})``;
-
-export const InputUnidade = styled.input.attrs({
-  className: 'form-control',
-})``;
-
-export const InputEndereco = styled.input.attrs({
-  className: 'form-control',
-})``;
-
-export const InputObjetivo = styled.textarea.attrs({
-  className: 'form-control',
-})``;
-
-export const InputContato = styled.input.attrs({
-  className: 'form-control',
-})``;
-
-export const InputObs = styled.textarea.attrs({
-  className: 'form-control',
-  rows: '8',
-})``;
-
-export const InputNecessidade = styled.input.attrs({
-  className: 'form-control',
-})``;
-
-export const ButtonSubmit = styled.button.attrs({
-  className: 'btn btn-primary',
-})`
-  margin-top: 20px;
-  margin-bottom: 20px;
-`;
-export const ButtonForm = styled.button.attrs({
-  className: 'btn btn-primary col-md-5',
-})`
-  margin: 10px;
+export const ButtonSubmit = styled.button`
+  margin-top: 14px;
+  margin-bottom: 14px;
+  border-radius: 4px;
+  width: 200px;
+  height: 40px;
+  background-color: #7159c1;
+  border: 1px solid blue;
+  color: white;
+  outline: none;
 `;
 
-export const ButtonList = styled.button.attrs({
-  className: 'btn btn-secondary col-md-5',
+export const Img = styled.img``;
+
+export const Table = styled.table.attrs({
+  className: 'table',
 })`
-  margin: 10px;
+  td,
+  tr,
+  th {
+    border: 1px solid black;
+    padding: 10px;
+    font-size: 15px;
+  }
 `;
-export const ButtonOption = styled.button.attrs({
-  className: 'badge bg-secondary',
+
+export const Button = styled.button.attrs({
+  className: ' button',
 })`
-  float: right;
+  width: 100px;
+  height: 40px;
+  background: #7159c1;
+  color: white;
+  border-radius: 4px;
+  border: 1px solid #7159c1;
 `;

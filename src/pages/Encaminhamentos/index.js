@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { BsCardList } from 'react-icons/bs';
+import { BsCardList, BsFileEarmarkText } from 'react-icons/bs';
 
 import ClipLoader from 'react-spinners/ClipLoader';
 import api from '../../services/api';
@@ -23,7 +23,7 @@ import {
   ButtonSubmit,
   ButtonForm,
   ButtonList,
-  OpenEncaminhamento,
+  ButtonOption,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -156,33 +156,37 @@ export default class Encaminhamentos extends Component {
                       <hr />
                       {form ? (
                         <>
-                          <span>
-                            Selecione o usuário para o encaminhamento:{' '}
-                          </span>
-                          <Options>
-                            {data.length ? (
-                              data.map((op) => <Op key={op.id}>{op.name}</Op>)
-                            ) : (
-                              <Op>SEM ALUNOS CADATRADOS NO MOMENTO...</Op>
-                            )}
-                          </Options>
-                          <span>Informe a data do encaminhamento: </span>
-                          <InputDate />
-                          <span>Informe a unidade de atendimento: </span>
-                          <InputUnidade />
-                          <span>Informe o endereço da unidade: </span>
-                          <InputEndereco />
-                          <span>Objetivo do encaminhamento: </span>
-                          <InputObjetivo />
-                          <span>Informe a necessidade do encaminhamento: </span>
-                          <InputNecessidade />
-                          <span>Informe o contato do estabelecimento: </span>
-                          <InputContato />
-                          <span>
-                            Observações em relação ao encaminhamento:{' '}
-                          </span>
-                          <InputObs />
-                          <ButtonSubmit>Salvar</ButtonSubmit>
+                          <div className="row">
+                            <span>
+                              Selecione o usuário para o encaminhamento:{' '}
+                            </span>
+                            <Options>
+                              {data.length ? (
+                                data.map((op) => <Op key={op.id}>{op.name}</Op>)
+                              ) : (
+                                <Op>SEM ALUNOS CADATRADOS NO MOMENTO...</Op>
+                              )}
+                            </Options>
+                            <span>Informe a data do encaminhamento: </span>
+                            <InputDate />
+                            <span>Informe a unidade de atendimento: </span>
+                            <InputUnidade />
+                            <span>Informe o endereço da unidade: </span>
+                            <InputEndereco />
+                            <span>Objetivo do encaminhamento: </span>
+                            <InputObjetivo />
+                            <span>
+                              Informe a necessidade do encaminhamento:{' '}
+                            </span>
+                            <InputNecessidade />
+                            <span>Informe o contato do estabelecimento: </span>
+                            <InputContato />
+                            <span>
+                              Observações em relação ao encaminhamento:{' '}
+                            </span>
+                            <InputObs />
+                            <ButtonSubmit>Salvar</ButtonSubmit>
+                          </div>
                         </>
                       ) : (
                         <>
@@ -194,10 +198,22 @@ export default class Encaminhamentos extends Component {
                                   className="border form-control"
                                   key={item.id}
                                 >
-                                  {item.unidade}
-                                  <OpenEncaminhamento>
-                                    Abrir ficha
-                                  </OpenEncaminhamento>
+                                  <strong>Unidade: </strong>
+                                  {item.unidade}/<strong> Nome: </strong>
+                                  {item.user.name}
+                                  <Link
+                                    to={`/encaminhaficha/${encodeURIComponent(
+                                      item.id
+                                    )}`}
+                                  >
+                                    <ButtonOption className="btn btn-primary">
+                                      Gerar ficha
+                                      <BsFileEarmarkText
+                                        size={20}
+                                        style={{ marginLeft: '10px' }}
+                                      />
+                                    </ButtonOption>
+                                  </Link>
                                 </span>
                               ))}
                             </>

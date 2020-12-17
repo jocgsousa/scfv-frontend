@@ -9,6 +9,7 @@ import Users from './pages/Users';
 import Ficha from './pages/Ficha';
 import FichaUser from './pages/FichaUser';
 import Encaminhamentos from './pages/Encaminhamentos';
+import FichaEncaminhamento from './pages/FichaEncaminhamento';
 import Relatorio1 from './pages/Relatorio1';
 import Relatorio2 from './pages/Relatorio2';
 import Relatorio3 from './pages/Relatorio3';
@@ -31,6 +32,7 @@ export default function Routes() {
         <Route path="/relat3/" component={Relatorio3} />
         <Route path="/relat4/" component={Relatorio4} />
         <Route path="/encaminhamentos" component={Encaminhamentos} />
+        <Route path="/encaminhaficha/:users" component={FichaEncaminhamento} />
       </Switch>
     </BrowserRouter>
   );
