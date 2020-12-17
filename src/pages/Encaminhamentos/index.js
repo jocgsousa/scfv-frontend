@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { BsCardList } from 'react-icons/bs';
 
 import ClipLoader from 'react-spinners/ClipLoader';
 import api from '../../services/api';
@@ -10,6 +11,19 @@ import {
   Option,
   ContainerLoader,
   ButtonLogout,
+  Options,
+  Op,
+  InputDate,
+  InputUnidade,
+  InputEndereco,
+  InputObjetivo,
+  InputContato,
+  InputObs,
+  InputNecessidade,
+  ButtonSubmit,
+  ButtonForm,
+  ButtonList,
+  OpenEncaminhamento,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -20,9 +34,9 @@ export default class Encaminhamentos extends Component {
     username: '',
     token: '',
     data: [],
-    ativos: 0,
-    desativados: 0,
+    list: [],
     autenticated: true,
+    form: true,
   };
 
   async componentDidMount() {
@@ -40,17 +54,49 @@ export default class Encaminhamentos extends Component {
     });
 
     try {
-      const response = await api.get('/users', {
+      const response = await api.get('/alunos', {
         headers: {
           Authorization: `Bearer ${key}`,
         },
       });
-      this.setState({ loading: false, data: response.data.alunosAtivados });
+      // const total = ativos + desativados;
+      this.setState({
+        loading: false,
+        data: response.data.alunosAtivados.rows,
+      });
+    } catch (error) {
+      console.log(error.response.data.error);
+    }
+  }
+
+  optionForm = () => {
+    this.setState({ form: true });
+  };
+
+  optionList = () => {
+    this.setState({ form: false });
+    this.listEncaminhados();
+  };
+
+  listEncaminhados = async () => {
+    this.setState({ loading: true });
+    const { token } = this.state;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const response = await api.get('/encaminhamentos', config);
+      console.log(response.data);
+      this.setState({ loading: false, list: response.data });
+      // Retorna um element jsx
     } catch (error) {
       this.setState({ loading: false });
       console.log(error.response.data.error);
     }
-  }
+  };
 
   logoff = () => {
     localStorage.removeItem('token');
@@ -59,7 +105,7 @@ export default class Encaminhamentos extends Component {
   };
 
   render() {
-    const { username, loading, autenticated } = this.state;
+    const { username, loading, autenticated, data, form, list } = this.state;
 
     return (
       <>
@@ -71,7 +117,7 @@ export default class Encaminhamentos extends Component {
         <br />
         <br />
         <br />
-        <div className="container">
+        <div className="container" style={{ height: '1000px' }}>
           <div className="row">
             <div className="col-md-3">
               <Link to="/painel">
@@ -99,10 +145,70 @@ export default class Encaminhamentos extends Component {
                 </>
               ) : (
                 <>
-                  <div className="row">
-                    <h5>Formulário de encaminhamentos</h5>
-                    <hr />
-                    <select>{}</select>
+                  <div className="container">
+                    <div className="row">
+                      <ButtonForm onClick={this.optionForm}>
+                        Encaminhamento
+                      </ButtonForm>
+                      <ButtonList onClick={this.optionList}>
+                        Listar <BsCardList />
+                      </ButtonList>
+                      <hr />
+                      {form ? (
+                        <>
+                          <span>
+                            Selecione o usuário para o encaminhamento:{' '}
+                          </span>
+                          <Options>
+                            {data.length ? (
+                              data.map((op) => <Op key={op.id}>{op.name}</Op>)
+                            ) : (
+                              <Op>SEM ALUNOS CADATRADOS NO MOMENTO...</Op>
+                            )}
+                          </Options>
+                          <span>Informe a data do encaminhamento: </span>
+                          <InputDate />
+                          <span>Informe a unidade de atendimento: </span>
+                          <InputUnidade />
+                          <span>Informe o endereço da unidade: </span>
+                          <InputEndereco />
+                          <span>Objetivo do encaminhamento: </span>
+                          <InputObjetivo />
+                          <span>Informe a necessidade do encaminhamento: </span>
+                          <InputNecessidade />
+                          <span>Informe o contato do estabelecimento: </span>
+                          <InputContato />
+                          <span>
+                            Observações em relação ao encaminhamento:{' '}
+                          </span>
+                          <InputObs />
+                          <ButtonSubmit>Salvar</ButtonSubmit>
+                        </>
+                      ) : (
+                        <>
+                          <h5>Encaminhados</h5>
+                          {list ? (
+                            <>
+                              {list.map((item) => (
+                                <span
+                                  className="border form-control"
+                                  key={item.id}
+                                >
+                                  {item.unidade}
+                                  <OpenEncaminhamento>
+                                    Abrir ficha
+                                  </OpenEncaminhamento>
+                                </span>
+                              ))}
+                            </>
+                          ) : (
+                            <>
+                              <span>Sem encaminhamentos no momento!</span>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </div>
                   </div>
                 </>
               )}

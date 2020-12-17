@@ -89,3 +89,62 @@ export const ButtonLogout = styled.button.attrs({
   position: relative;
   bottom: 4px;
 `;
+
+export const Options = styled.select.attrs({
+  className: 'form-control ',
+})``;
+
+export const Op = styled.option``;
+
+export const InputDate = styled.input.attrs({
+  typ: 'text',
+  className: 'form-control col-md-6',
+  type: 'date',
+})``;
+
+export const InputUnidade = styled.input.attrs({
+  className: 'form-control',
+})``;
+
+export const InputEndereco = styled.input.attrs({
+  className: 'form-control',
+})``;
+
+export const InputObjetivo = styled.input.attrs({
+  className: 'form-control',
+})``;
+
+export const InputContato = styled.input.attrs({
+  className: 'form-control',
+})``;
+
+export const InputObs = styled.input.attrs({
+  className: 'form-control',
+})``;
+
+export const InputNecessidade = styled.input.attrs({
+  className: 'form-control',
+})``;
+
+export const ButtonSubmit = styled.button.attrs({
+  className: 'btn btn-primary',
+})`
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+export const ButtonForm = styled.button.attrs({
+  className: 'btn btn-primary col-md-5',
+})`
+  margin: 10px;
+`;
+
+export const ButtonList = styled.button.attrs({
+  className: 'btn btn-secondary col-md-5',
+})`
+  margin: 10px;
+`;
+export const OpenEncaminhamento = styled.button.attrs({
+  className: 'badge bg-secondary',
+})`
+  float: right;
+`;
