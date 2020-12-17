@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { HorizontalBar, Doughnut } from 'react-chartjs-2';
-import ClipLoader from 'react-spinners/ClipLoader';
 
+import ClipLoader from 'react-spinners/ClipLoader';
 import api from '../../services/api';
+
+// import api from '../../services/api';
 import {
   Header,
   Option,
@@ -18,7 +19,7 @@ export default class Encaminhamentos extends Component {
     loading: false,
     username: '',
     token: '',
-    charData: [],
+    data: [],
     ativos: 0,
     desativados: 0,
     autenticated: true,
@@ -39,32 +40,14 @@ export default class Encaminhamentos extends Component {
     });
 
     try {
-      const response = await api.get('/alunos', {
+      const response = await api.get('/users', {
         headers: {
           Authorization: `Bearer ${key}`,
         },
       });
-      this.setState({
-        loading: false,
-        ativos: response.data.alunosAtivados.count,
-        desativados: response.data.alunosDesativados.count,
-      });
-
-      const { ativos, desativados } = this.state;
-      // const total = ativos + desativados;
-      this.setState({
-        data: {
-          labels: [`Ativos: ${ativos}`, `Desativados: ${desativados}`],
-          datasets: [
-            {
-              label: 'Usuários cadastrados',
-              data: [`${ativos}`, `${desativados}`],
-              backgroundColor: ['purple', 'green'],
-            },
-          ],
-        },
-      });
+      this.setState({ loading: false, data: response.data.alunosAtivados });
     } catch (error) {
+      this.setState({ loading: false });
       console.log(error.response.data.error);
     }
   }
@@ -76,7 +59,7 @@ export default class Encaminhamentos extends Component {
   };
 
   render() {
-    const { username, loading, autenticated, data } = this.state;
+    const { username, loading, autenticated } = this.state;
 
     return (
       <>
@@ -117,32 +100,9 @@ export default class Encaminhamentos extends Component {
               ) : (
                 <>
                   <div className="row">
-                    <div className="col-md-6">
-                      <HorizontalBar
-                        data={data}
-                        options={{
-                          maintainAspectRatio: true,
-                          title: {
-                            display: true,
-                            text: 'Usuários registrados',
-                            fontSize: 25,
-                          },
-                        }}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <Doughnut
-                        data={data}
-                        options={{
-                          maintainAspectRatio: true,
-                          title: {
-                            display: true,
-                            text: 'Índice',
-                            fontSize: 25,
-                          },
-                        }}
-                      />
-                    </div>
+                    <h5>Formulário de encaminhamentos</h5>
+                    <hr />
+                    <select>{}</select>
                   </div>
                 </>
               )}

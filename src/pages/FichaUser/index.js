@@ -361,20 +361,12 @@ export default class FichaUser extends Component {
                                   ? ` ${curso.dias} dias`
                                   : 'CURSO FINALIZADO'}
                               </td>
-
                               <td>
-                                <strong>Início :</strong>
-                                {curso.inicio}
-                                <strong>Final :</strong>
-                                {curso.fim}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colSpan="2">
                                 <strong>Local do curso:</strong>
                                 {curso.orgao ? curso.orgao : 'SEM/LOCAL'}
                               </td>
                             </tr>
+
                             <br />
                           </>
                         ))

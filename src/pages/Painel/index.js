@@ -210,7 +210,7 @@ export default class Painel extends Component {
                       />
                     </div>
                   </Row>
-
+                  <br />
                   <div className="row">
                     <Form>
                       <center>
@@ -234,7 +234,7 @@ export default class Painel extends Component {
                       ''
                     )}
                   </div>
-
+                  <br />
                   <div className="row border">
                     <div className="col-md-6">
                       <Link to="/relat1">
