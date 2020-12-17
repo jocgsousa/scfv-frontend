@@ -145,7 +145,15 @@ export const ButtonList = styled.button.attrs({
   margin: 10px;
 `;
 export const ButtonOption = styled.button.attrs({
-  className: 'badge bg-secondary',
+  className: 'badge bg-secondary btn',
 })`
   float: right;
+  margin: 1px;
+`;
+
+export const ButtonDelete = styled.button.attrs({
+  className: 'badge bg-danger btn',
+})`
+  float: right;
+  margin: 1px;
 `;

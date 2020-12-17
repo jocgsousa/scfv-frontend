@@ -24,6 +24,7 @@ import {
   ButtonForm,
   ButtonList,
   ButtonOption,
+  ButtonDelete,
 
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
@@ -98,6 +99,25 @@ export default class Encaminhamentos extends Component {
     }
   };
 
+  deleteEncaminhamento = async (e) => {
+    const { list, token } = this.state;
+    const newList = list.filter((item) => item.id !== e);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      await api.delete(`/encaminhamentos/${e}`, config);
+      alert('Deletado com sucesso');
+    } catch (error) {
+      console.log(error.response.data.error);
+    }
+    this.setState({
+      list: newList,
+    });
+  };
+
   logoff = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
@@ -157,6 +177,7 @@ export default class Encaminhamentos extends Component {
                       {form ? (
                         <>
                           <div className="row">
+                            <h6>Novo encaminhamento</h6>
                             <span>
                               Selecione o usuário para o encaminhamento:{' '}
                             </span>
@@ -191,7 +212,7 @@ export default class Encaminhamentos extends Component {
                       ) : (
                         <>
                           <h5>Encaminhados</h5>
-                          {list ? (
+                          {list.length ? (
                             <>
                               {list.map((item) => (
                                 <span
@@ -206,7 +227,7 @@ export default class Encaminhamentos extends Component {
                                       item.id
                                     )}`}
                                   >
-                                    <ButtonOption className="btn btn-primary">
+                                    <ButtonOption>
                                       Gerar ficha
                                       <BsFileEarmarkText
                                         size={20}
@@ -214,6 +235,17 @@ export default class Encaminhamentos extends Component {
                                       />
                                     </ButtonOption>
                                   </Link>
+                                  <ButtonDelete
+                                    onClick={() =>
+                                      this.deleteEncaminhamento(item.id)
+                                    }
+                                  >
+                                    Deletar
+                                    <BsFileEarmarkText
+                                      size={20}
+                                      style={{ marginLeft: '10px' }}
+                                    />
+                                  </ButtonDelete>
                                 </span>
                               ))}
                             </>

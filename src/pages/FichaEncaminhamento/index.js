@@ -246,6 +246,21 @@ export default class FichaUser extends Component {
                           </center>
                         </td>
                       </tr>
+                      <tr>
+                        <center>
+                          <span>
+                            <a
+                              href="https://www.gesuas.com.br/"
+                              style={{ textDecoration: 'none' }}
+                              target="_blanck"
+                            >
+                              {' '}
+                              Instrumental de acordo com a NOB/SUAS e demais
+                              normativas como todo o sistema GESUAS.
+                            </a>
+                          </span>
+                        </center>
+                      </tr>
                     </Table>
                   </div>
                 </div>
