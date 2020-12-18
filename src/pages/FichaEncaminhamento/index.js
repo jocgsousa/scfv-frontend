@@ -177,7 +177,7 @@ export default class FichaUser extends Component {
                             Encaminho o(a) Sr.(a){' '}
                             <strong>{dataUser.name} </strong> e solicito atenção
                             para para seu atendimento na unidade
-                            <strong>{dataFicha.unidade}</strong> localizado no
+                            <strong> {dataFicha.unidade}</strong> localizado no
                             endereço {dataFicha.endereco_unidade}, tendo em
                             consideração as dificuldades identificadas pela
                             Assistência Social e expostas a seguir:

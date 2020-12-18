@@ -32,12 +32,22 @@ import {
 export default class Encaminhamentos extends Component {
   state = {
     loading: false,
+    loadingRegister: false,
     username: '',
     token: '',
     data: [],
     list: [],
     autenticated: true,
     form: true,
+    // Form data
+    userid: '',
+    date: '',
+    unidade: '',
+    enderecounidade: '',
+    objetivo: '',
+    necessidades: '',
+    obs: '',
+    contato: '',
   };
 
   async componentDidMount() {
@@ -118,6 +128,104 @@ export default class Encaminhamentos extends Component {
     });
   };
 
+  handleUserid = (e) => {
+    this.setState({ userid: e.target.value });
+  };
+
+  handleDate = (e) => {
+    this.setState({ date: e.target.value });
+  };
+
+  handleUnidade = (e) => {
+    this.setState({ unidade: e.target.value });
+  };
+
+  handleEnderecoUnidade = (e) => {
+    this.setState({ enderecounidade: e.target.value });
+  };
+
+  handleObjetivo = (e) => {
+    this.setState({ objetivo: e.target.value });
+  };
+
+  handleNecessidades = (e) => {
+    this.setState({ necessidades: e.target.value });
+  };
+
+  handleObs = (e) => {
+    this.setState({ obs: e.target.value });
+  };
+
+  handleContato = (e) => {
+    this.setState({ contato: e.target.value });
+  };
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const {
+      token,
+      userid,
+      date,
+      unidade,
+      enderecounidade,
+      objetivo,
+      necessidades,
+      obs,
+      contato,
+    } = this.state;
+
+    if (
+      userid !== '' &&
+      date !== '' &&
+      enderecounidade !== '' &&
+      objetivo !== '' &&
+      necessidades !== '' &&
+      obs !== '' &&
+      contato !== ''
+    ) {
+      this.setState({ loadingRegister: true });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const object = {
+        user_id: userid,
+        date,
+        unidade,
+        endereco_unidade: enderecounidade,
+        objetivo,
+        necessidades,
+        obs,
+        contato,
+      };
+
+      try {
+        await api.post('/encaminhamentos', object, config);
+        alert('Encaminhamento registrado com sucesso!');
+        this.setState({
+          loadingRegister: false,
+          userid: '',
+          date: '',
+          unidade: '',
+          enderecounidade: '',
+          objetivo: '',
+          necessidades: '',
+          obs: '',
+          contato: '',
+        });
+      } catch (error) {
+        alert('Falha ao registrar encaminhamento!');
+        this.setState({ loadingRegister: false });
+
+        console.log(error.response.data.error);
+      }
+    } else {
+      alert('Por favor informe os dados para registro do encaminhamento!');
+    }
+  };
+
   logoff = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
@@ -125,7 +233,23 @@ export default class Encaminhamentos extends Component {
   };
 
   render() {
-    const { username, loading, autenticated, data, form, list } = this.state;
+    const {
+      username,
+      loading,
+      loadingRegister,
+      autenticated,
+      data,
+      form,
+      list,
+
+      date,
+      unidade,
+      enderecounidade,
+      objetivo,
+      necessidades,
+      obs,
+      contato,
+    } = this.state;
 
     return (
       <>
@@ -181,32 +305,61 @@ export default class Encaminhamentos extends Component {
                             <span>
                               Selecione o usuário para o encaminhamento:{' '}
                             </span>
-                            <Options>
+                            <Options onChange={this.handleUserid}>
+                              <Op>SELECIONE UM USUÁRIO..</Op>
                               {data.length ? (
-                                data.map((op) => <Op key={op.id}>{op.name}</Op>)
+                                data.map((op) => (
+                                  <Op key={op.id} value={op.id}>
+                                    {op.name}
+                                  </Op>
+                                ))
                               ) : (
                                 <Op>SEM ALUNOS CADATRADOS NO MOMENTO...</Op>
                               )}
                             </Options>
                             <span>Informe a data do encaminhamento: </span>
-                            <InputDate />
+                            <InputDate
+                              onChange={this.handleDate}
+                              value={date}
+                            />
                             <span>Informe a unidade de atendimento: </span>
-                            <InputUnidade />
+                            <InputUnidade
+                              onChange={this.handleUnidade}
+                              value={unidade}
+                            />
                             <span>Informe o endereço da unidade: </span>
-                            <InputEndereco />
+                            <InputEndereco
+                              onChange={this.handleEnderecoUnidade}
+                              value={enderecounidade}
+                            />
                             <span>Objetivo do encaminhamento: </span>
-                            <InputObjetivo />
+                            <InputObjetivo
+                              onChange={this.handleObjetivo}
+                              value={objetivo}
+                            />
                             <span>
                               Informe a necessidade do encaminhamento:{' '}
                             </span>
-                            <InputNecessidade />
+                            <InputNecessidade
+                              onChange={this.handleNecessidades}
+                              value={necessidades}
+                            />
                             <span>Informe o contato do estabelecimento: </span>
-                            <InputContato />
+                            <InputContato
+                              onChange={this.handleContato}
+                              value={contato}
+                            />
                             <span>
-                              Observações em relação ao encaminhamento:{' '}
+                              Observações em relação ao encaminhamento:
                             </span>
-                            <InputObs />
-                            <ButtonSubmit>Salvar</ButtonSubmit>
+                            <InputObs onChange={this.handleObs} value={obs} />
+                            <ButtonSubmit onClick={this.handleSubmit}>
+                              {loadingRegister ? (
+                                <ClipLoader size={20} color="#FFFF" />
+                              ) : (
+                                'Salvar'
+                              )}
+                            </ButtonSubmit>
                           </div>
                         </>
                       ) : (
