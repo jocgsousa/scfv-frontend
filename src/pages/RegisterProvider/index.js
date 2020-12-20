@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-// import api from '../../services/api';
+import { ClipLoader } from 'react-spinners';
+import api from '../../services/api';
 
 import {
   Container,
@@ -19,6 +19,7 @@ import {
 
 export default class RegisterProvider extends Component {
   state = {
+    loading: false,
     name: '',
     phone: '',
     cpf: '',
@@ -51,13 +52,55 @@ export default class RegisterProvider extends Component {
     this.setState({ password: e.target.value });
   };
 
-  render() {
+  handleSubmitRegister = async (e) => {
+    e.preventDefault();
+
     const { name, phone, cpf, date, email, password } = this.state;
+
+    if (
+      name !== '' &&
+      phone !== '' &&
+      cpf !== '' &&
+      date !== '' &&
+      email !== '' &&
+      password !== ''
+    ) {
+      try {
+        this.setState({ loading: true });
+        await api.post('/users', {
+          name,
+          phone,
+          cpf,
+          data_nascimento: date,
+          email,
+          password,
+          provider: true,
+        });
+        alert('Cadastro realizado com sucesso!');
+        this.setState({
+          loading: false,
+          name: '',
+          phone: '',
+          cpf: '',
+          date: '',
+          email: '',
+          password: '',
+        });
+      } catch (error) {
+        console.log(error ? error.response.data.error : 'Falha na conexão');
+      }
+    } else {
+      alert('Por favor preencha todos os dados para cadastro!');
+    }
+  };
+
+  render() {
+    const { loading, name, phone, cpf, date, email, password } = this.state;
     return (
       <Container>
         <h5 style={{ color: '#FFF' }}>Registro de administrador</h5>
         <hr />
-        <Form>
+        <Form onSubmit={this.handleSubmitRegister}>
           <strong style={{ color: '#FFF' }}>Informe o nome completo</strong>
           <InputName onChange={this.handleInputName} value={name} />
           <strong style={{ color: '#FFF' }}>
@@ -76,7 +119,9 @@ export default class RegisterProvider extends Component {
           <InputPassword onChange={this.handleInputPassword} value={password} />
           <br />
           <ButtonSubmit>
-            <ButtonSubmitText>Registrar-me</ButtonSubmitText>
+            <ButtonSubmitText>
+              {loading ? <ClipLoader size={14} color="#FFF" /> : 'Registrar-me'}
+            </ButtonSubmitText>
           </ButtonSubmit>
           <Link to="/">
             <ButtonLogin>

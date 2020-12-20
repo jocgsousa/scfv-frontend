@@ -52,7 +52,9 @@ export const InputPassword = styled.input.attrs({
 
 export const ButtonSubmit = styled.button.attrs({
   className: 'btn btn-success',
-})``;
+})`
+  width: 200px;
+`;
 
 export const ButtonSubmitText = styled.span`
   color: white;
@@ -63,4 +65,5 @@ export const ButtonLogin = styled.button.attrs({
   className: 'btn btn-secondary',
 })`
   margin-left: 10px;
+  width: 200px;
 `;
