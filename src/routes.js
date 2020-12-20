@@ -14,6 +14,7 @@ import Relatorio1 from './pages/Relatorio1';
 import Relatorio2 from './pages/Relatorio2';
 import Relatorio3 from './pages/Relatorio3';
 import Relatorio4 from './pages/Relatorio4';
+import RegisterProvider from './pages/RegisterProvider';
 
 export default function Routes() {
   return (
@@ -22,6 +23,7 @@ export default function Routes() {
         <Route path="/" exact component={Main} />
         <Route path="/painel" component={Painel} />
         <Route path="/register" component={Register} />
+        <Route path="/regprovider" component={RegisterProvider} />
         <Route path="/ficha/:users" component={Ficha} />
         <Route path="/f/:users" component={FichaUser} />
 

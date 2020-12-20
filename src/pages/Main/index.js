@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
 import api from '../../services/api';
 
@@ -85,6 +85,13 @@ export default class Main extends Component {
           <ButtonSubmit>
             {loading ? <ClipLoader size={20} color="#ffff" /> : 'Entrar'}
           </ButtonSubmit>
+          <Link
+            className="btn bg-success"
+            to="regprovider"
+            style={{ width: '100%', marginTop: '10px', color: 'white' }}
+          >
+            Registrar-me
+          </Link>
         </Form>
       </Container>
     );

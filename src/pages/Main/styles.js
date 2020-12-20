@@ -33,8 +33,7 @@ export const Title = styled.h1`
   color: #fff;
 `;
 
-export const TitleInput = styled.span`
-  font-size: 12px;
+export const TitleInput = styled.strong`
   color: #ffff;
 `;
 
