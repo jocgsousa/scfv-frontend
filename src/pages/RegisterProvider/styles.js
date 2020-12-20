@@ -58,3 +58,9 @@ export const ButtonSubmitText = styled.span`
   color: white;
   font-size: 14px;
 `;
+
+export const ButtonLogin = styled.button.attrs({
+  className: 'btn btn-secondary',
+})`
+  margin-left: 10px;
+`;
