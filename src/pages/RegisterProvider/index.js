@@ -55,6 +55,7 @@ export default class RegisterProvider extends Component {
   handleSubmitRegister = async (e) => {
     e.preventDefault();
 
+    // Conexão ok seguimos com o registro do usuário
     const { name, phone, cpf, date, email, password } = this.state;
 
     if (
@@ -93,6 +94,9 @@ export default class RegisterProvider extends Component {
     } else {
       alert('Por favor preencha todos os dados para cadastro!');
     }
+    // Fim da trtativa de registro do usuário
+
+    // Código de alerta ne a conextidade com o serviço do servidor estiver indósponível no memento
   };
 
   render() {
