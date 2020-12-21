@@ -87,7 +87,8 @@ export default class RegisterProvider extends Component {
           password: '',
         });
       } catch (error) {
-        console.log(error ? error.response.data.error : 'Falha na conexão');
+        this.setState({ loading: false });
+        alert(error ? error.response.data.error : 'Falha na conexão');
       }
     } else {
       alert('Por favor preencha todos os dados para cadastro!');
