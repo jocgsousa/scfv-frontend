@@ -5,7 +5,6 @@ import { BsCardList, BsFileEarmarkText } from 'react-icons/bs';
 import ClipLoader from 'react-spinners/ClipLoader';
 import api from '../../services/api';
 
-// import api from '../../services/api';
 import {
   Header,
   Option,
@@ -101,11 +100,13 @@ export default class Encaminhamentos extends Component {
     try {
       const response = await api.get('/encaminhamentos', config);
       console.log(response.data);
-      this.setState({ loading: false, list: response.data });
+      this.setState({
+        loading: false,
+        list: response.data ? response.data : null,
+      });
       // Retorna um element jsx
     } catch (error) {
       this.setState({ loading: false });
-      console.log(error.response.data.error);
     }
   };
 
@@ -306,7 +307,7 @@ export default class Encaminhamentos extends Component {
                               Selecione o usuário para o encaminhamento:{' '}
                             </span>
                             <Options onChange={this.handleUserid}>
-                              <Op>SELECIONE UM USUÁRIO..</Op>
+                              <Op value="">Abrir lista</Op>
                               {data.length ? (
                                 data.map((op) => (
                                   <Op key={op.id} value={op.id}>
@@ -314,7 +315,9 @@ export default class Encaminhamentos extends Component {
                                   </Op>
                                 ))
                               ) : (
-                                <Op>SEM ALUNOS CADATRADOS NO MOMENTO...</Op>
+                                <Op value="">
+                                  SEM ALUNOS CADATRADOS NO MOMENTO...
+                                </Op>
                               )}
                             </Options>
                             <span>Informe a data do encaminhamento: </span>

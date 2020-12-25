@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import InputMask from 'react-input-mask';
 
 export const Container = styled.div`
   display: flex; /* establish flex container */
@@ -114,7 +115,8 @@ export const InputObjetivo = styled.textarea.attrs({
   className: 'form-control',
 })``;
 
-export const InputContato = styled.input.attrs({
+export const InputContato = styled(InputMask).attrs({
+  mask: '(99) 9 9999-9999',
   className: 'form-control',
 })``;
 
