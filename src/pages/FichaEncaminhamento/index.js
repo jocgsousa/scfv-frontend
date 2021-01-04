@@ -194,15 +194,6 @@ export default class FichaUser extends Component {
                           <p>{dataFicha.objetivo}</p>
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          <strong style={{ textAlign: 'left' }}>
-                            Necessidades identificadas:
-                          </strong>
-                          <br />
-                          <p>{dataFicha.necessidades}</p>
-                        </td>
-                      </tr>
 
                       <tr>
                         <td>

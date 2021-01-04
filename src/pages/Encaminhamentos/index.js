@@ -75,7 +75,10 @@ export default class Encaminhamentos extends Component {
         data: response.data.alunosAtivados.rows,
       });
     } catch (error) {
-      console.log(error.response.data.error);
+      this.setState({
+        loading: false,
+        data: null,
+      });
     }
   }
 
@@ -139,6 +142,30 @@ export default class Encaminhamentos extends Component {
 
   handleUnidade = (e) => {
     this.setState({ unidade: e.target.value });
+    switch (e.target.value) {
+      case 'CREAS':
+        this.setState({
+          enderecounidade:
+            'R. São Francisco, 2325 - Cidade Nova, Marabá - PA, 68501-690',
+        });
+        break;
+      case 'CRAS BELA-VISTA':
+        this.setState({
+          enderecounidade:
+            'Travessa São Jorge, 0 – Maraba – PA – CEP: 68500-000',
+        });
+        break;
+      case 'CRAS-AMAPÁ':
+        this.setState({
+          enderecounidade:
+            'Tv. Castanheira, 40 - Amapá, Marabá - PA, 68502-300',
+        });
+        break;
+      default:
+        this.setState({
+          enderecounidade: '',
+        });
+    }
   };
 
   handleEnderecoUnidade = (e) => {
@@ -326,10 +353,21 @@ export default class Encaminhamentos extends Component {
                               value={date}
                             />
                             <span>Informe a unidade de atendimento: </span>
+
                             <InputUnidade
                               onChange={this.handleUnidade}
                               value={unidade}
-                            />
+                            >
+                              <option value="">
+                                SELECIONE A UNIDADE DE ATENDIMENTO...
+                              </option>
+                              <option value="CRAS-AMAPÁ">CRAS-AMAPÁ</option>
+                              <option value="CREAS">CREAS</option>
+
+                              <option value="CRAS BELA-VISTA">
+                                CRAS BELA-VISTA
+                              </option>
+                            </InputUnidade>
                             <span>Informe o endereço da unidade: </span>
                             <InputEndereco
                               onChange={this.handleEnderecoUnidade}

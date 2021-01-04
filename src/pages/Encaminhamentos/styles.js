@@ -103,7 +103,7 @@ export const InputDate = styled.input.attrs({
   type: 'date',
 })``;
 
-export const InputUnidade = styled.input.attrs({
+export const InputUnidade = styled.select.attrs({
   className: 'form-control',
 })``;
 
