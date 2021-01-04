@@ -377,6 +377,11 @@ export default class FichaUser extends Component {
                       )}
                     </Table>
                   </div>
+
+                  <strong>
+                    Assinatura do responsável:
+                    _________________________________________________
+                  </strong>
                 </div>
               </>
             )}
