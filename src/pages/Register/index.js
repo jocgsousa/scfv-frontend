@@ -22,7 +22,7 @@ export default class Register extends Component {
 
     // Dados do formulário de matricula
     nameUser: '',
-    paifUser: '',
+    paifUser: 'S/P',
     nisUser: '',
     cpfUser: '',
     rgUser: '',
@@ -160,7 +160,6 @@ export default class Register extends Component {
       nameResp !== '' &&
       cpfResp !== '' &&
       rgResp !== '' &&
-      emailUser !== '' &&
       sexoUser !== '' &&
       situacao !== '' &&
       turno !== ''
@@ -224,7 +223,6 @@ export default class Register extends Component {
       nameResp === '' ||
       cpfResp === '' ||
       rgResp === '' ||
-      emailUser === '' ||
       sexoUser === '' ||
       situacao === '' ||
       turno === ''
@@ -420,9 +418,7 @@ export default class Register extends Component {
                       </div>
 
                       <div className="col-md-6">
-                        <span>
-                          E-mail: <i style={{ color: 'red' }}>*</i>
-                        </span>
+                        <span>E-mail:</span>
                         <input
                           type="email"
                           className="form-control"
@@ -442,6 +438,7 @@ export default class Register extends Component {
                           className="form-control"
                           value={sexoUser}
                         >
+                          <option value="">SELECIONE O SEXO!</option>
                           <option value="F">FEMININO</option>
                           <option value="M">MASCULINO</option>
                         </select>
@@ -456,6 +453,9 @@ export default class Register extends Component {
                           onChange={this.handleSituacao}
                           value={situacao}
                         >
+                          <option value="">
+                            SELECIONE A SITUAÇÃO ATUAL DO USUÁRIO
+                          </option>
                           <option value="Não está em situação de prioritária">
                             Não está em situação de prioritária
                           </option>
@@ -522,6 +522,7 @@ export default class Register extends Component {
                           className="form-control"
                           value={turno}
                         >
+                          <option value="Matutino">SELECIONE O TURNO</option>
                           <option value="Matutino">Matutino</option>
                           <option value="Vespertino">Vespertino</option>
                         </select>
