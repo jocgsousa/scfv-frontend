@@ -133,6 +133,13 @@ export default class Users extends Component {
     }
   };
 
+  checkIdade = (idade) => {
+    if (idade > 17) {
+      return <span style={{ marginLeft: '10px', color: 'red' }}>Adulto</span>;
+    }
+    return '';
+  };
+
   render() {
     const {
       username,
@@ -193,6 +200,7 @@ export default class Users extends Component {
                         {ativos.map((user) => (
                           <Item key={user.id}>
                             {user.name}
+                            {this.checkIdade(user.idade)}
                             <Desativar
                               onClick={() => this.handleDesativa(user.id)}
                             >
@@ -214,7 +222,7 @@ export default class Users extends Component {
                       <List>
                         {desativados.map((user) => (
                           <Item>
-                            {user.name}{' '}
+                            {user.name} {this.checkIdade(user.idade)}
                             <Ativar onClick={() => this.handleAtiva(user.id)}>
                               Ativar
                             </Ativar>
