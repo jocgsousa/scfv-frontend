@@ -104,7 +104,9 @@ export const List = styled.ul.attrs({
 
 export const Item = styled.li.attrs({
   className: 'border col-md-12',
-})``;
+})`
+  padding: 6px;
+`;
 
 export const Desativar = styled.button.attrs({
   className: 'badge bg-danger',
@@ -129,4 +131,10 @@ export const Ativar = styled.button.attrs({
   float: right;
   outline: none;
   border: 1px solid #ccc;
+`;
+
+export const Avatar = styled.img`
+  width: 50px;
+  border-radius: 25px;
+  margin-right: 5px;
 `;

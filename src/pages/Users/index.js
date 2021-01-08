@@ -15,9 +15,10 @@ import {
   Desativar,
   Ficha,
   Ativar,
-
+  Avatar,
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
+import UserIcon from './assets/user-icon.svg';
 
 export default class Users extends Component {
   state = {
@@ -199,6 +200,7 @@ export default class Users extends Component {
                       <List>
                         {ativos.map((user) => (
                           <Item key={user.id}>
+                            <Avatar src={UserIcon} />
                             {user.name}
                             {this.checkIdade(user.idade)}
                             <Desativar
@@ -222,7 +224,11 @@ export default class Users extends Component {
                       <List>
                         {desativados.map((user) => (
                           <Item>
+                            <Avatar src={UserIcon} />
                             {user.name} {this.checkIdade(user.idade)}
+                            <Link to={`/ficha/${encodeURIComponent(user.id)}`}>
+                              <Ficha> Abrir ficha</Ficha>
+                            </Link>
                             <Ativar onClick={() => this.handleAtiva(user.id)}>
                               Ativar
                             </Ativar>
