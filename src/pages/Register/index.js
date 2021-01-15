@@ -315,7 +315,7 @@ export default class Register extends Component {
                       </div>
 
                       <div className="col-md-6">
-                        <span>NIS:</span> <i style={{ color: 'red' }}>*</i>
+                        <span>NIS:</span> <i style={{ color: 'red' }}> * </i>
                         <input
                           className="form-control"
                           onChange={this.handleNIS}
