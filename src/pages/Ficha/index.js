@@ -16,7 +16,6 @@ import {
   Op,
   ButtonSubmit,
   ButtonOption,
-  InputCPF,
   InputPhone,
   Container,
 
@@ -776,6 +775,7 @@ export default class Ficha extends Component {
                         </ButtonOption>
                       </Link>
                     </div>
+
                     <ContainerUser className="col-md-12">
                       <div className="row">
                         <form onSubmit={this.updateUser}>
@@ -808,7 +808,7 @@ export default class Ficha extends Component {
 
                             <div className="col-md-6">
                               <span>CPF:</span>
-                              <InputCPF
+                              <input
                                 className="form-control"
                                 onChange={this.handleCPF}
                                 value={cpfUser}
@@ -821,7 +821,6 @@ export default class Ficha extends Component {
                                 className="form-control"
                                 onChange={this.handleRG}
                                 value={rgUser}
-                                maxLength="7"
                               />
                             </div>
 
@@ -867,7 +866,7 @@ export default class Ficha extends Component {
 
                             <div className="col-md-6">
                               <span>CPF Responsável:</span>
-                              <InputCPF
+                              <input
                                 className="form-control"
                                 onChange={this.handleCPFREsp}
                                 value={cpfResp}
@@ -880,7 +879,6 @@ export default class Ficha extends Component {
                                 className="form-control"
                                 onChange={this.handleRGResp}
                                 value={rgResp}
-                                maxLength="7"
                               />
                             </div>
 

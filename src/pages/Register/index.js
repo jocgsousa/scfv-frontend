@@ -9,7 +9,6 @@ import {
   ContainerLoader,
   ButtonLogout,
   ButtonSubmit,
-  InputCPF,
 } from './styles';
 
 export default class Register extends Component {
@@ -152,8 +151,6 @@ export default class Register extends Component {
       nameUser !== '' &&
       paifUser !== '' &&
       nisUser !== '' &&
-      cpfUser !== '' &&
-      rgUser !== '' &&
       dataUser !== '' &&
       naturalidade !== '' &&
       nameMae !== '' &&
@@ -215,8 +212,6 @@ export default class Register extends Component {
       nameUser === '' ||
       paifUser === '' ||
       nisUser === '' ||
-      cpfUser === '' ||
-      rgUser === '' ||
       dataUser === '' ||
       naturalidade === '' ||
       nameMae === '' ||
@@ -320,7 +315,7 @@ export default class Register extends Component {
                       </div>
 
                       <div className="col-md-6">
-                        <span>NIS:</span>
+                        <span>NIS:</span> <i style={{ color: 'red' }}>*</i>
                         <input
                           className="form-control"
                           onChange={this.handleNIS}
@@ -331,18 +326,19 @@ export default class Register extends Component {
 
                       <div className="col-md-6">
                         <span>CPF:</span>
-                        <InputCPF onChange={this.handleCPF} value={cpfUser} />
+                        <input
+                          className="form-control"
+                          onChange={this.handleCPF}
+                          value={cpfUser}
+                        />
                       </div>
 
                       <div className="col-md-6">
-                        <span>
-                          RG: <i style={{ color: 'red' }}>*</i>
-                        </span>
+                        <span>RG:</span>
                         <input
                           className="form-control"
                           onChange={this.handleRG}
                           value={rgUser}
-                          maxLength="7"
                         />
                       </div>
 
@@ -398,7 +394,7 @@ export default class Register extends Component {
                         <span>
                           CPF Responsável: <i style={{ color: 'red' }}>*</i>
                         </span>
-                        <InputCPF
+                        <input
                           className="form-control"
                           onChange={this.handleCPFREsp}
                           value={cpfResp}
@@ -413,7 +409,7 @@ export default class Register extends Component {
                           className="form-control"
                           onChange={this.handleRGResp}
                           value={rgResp}
-                          maxLength="7"
+                          maxLength="12"
                         />
                       </div>
 
@@ -522,7 +518,7 @@ export default class Register extends Component {
                           className="form-control"
                           value={turno}
                         >
-                          <option value="Matutino">SELECIONE O TURNO</option>
+                          <option value="">SELECIONE O TURNO</option>
                           <option value="Matutino">Matutino</option>
                           <option value="Vespertino">Vespertino</option>
                         </select>
