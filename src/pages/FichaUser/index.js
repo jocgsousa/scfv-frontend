@@ -214,7 +214,7 @@ export default class FichaUser extends Component {
                     <Table>
                       <tr>
                         <td>
-                          <strong>RG:</strong> {user.rg_resp}
+                          <strong>RG:</strong> {user.rg}
                         </td>
 
                         <td>
