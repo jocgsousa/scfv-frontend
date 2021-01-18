@@ -17,8 +17,8 @@ import {
   // eslint-disable-next-line import/no-unresolved
 } from './styles';
 
-import Logo1 from './assets/logo1.png';
-import Logo2 from './assets/logo2.jpg';
+// import Logo1 from './assets/logo1.svg';
+// import Logo2 from './assets/logo2.svg';
 
 export default class FichaUser extends Component {
   state = {
@@ -132,7 +132,7 @@ export default class FichaUser extends Component {
                     <tr>
                       <td className="col-md-4">
                         <Img
-                          src={Logo1}
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_MHpKjLvm7faqVtK7rnD9jU8FVrJ9oi3CPg&usqp=CAU"
                           style={{
                             width: '150px',
                             float: 'left',
@@ -164,7 +164,7 @@ export default class FichaUser extends Component {
 
                       <td className="col-md-4">
                         <Img
-                          src={Logo2}
+                          src="https://image.slidesharecdn.com/logosuasvetorc8-2-160926113936/95/logo-suas-vetorc8-2-1-638.jpg?cb=1474890009"
                           style={{
                             width: '120px',
                             float: 'right',
