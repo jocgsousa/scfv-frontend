@@ -35,6 +35,7 @@ export default function Routes() {
         <Route path="/relat4/" component={Relatorio4} />
         <Route path="/encaminhamentos" component={Encaminhamentos} />
         <Route path="/encaminhaficha/:users" component={FichaEncaminhamento} />
+        <Route component={Painel} />
       </Switch>
     </BrowserRouter>
   );

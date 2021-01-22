@@ -23,5 +23,10 @@ export default createGlobalStyle`
         cursor: pointer;
     }
 
-    
+    @media all and (display-mode: fullscreen) {
+        body {
+            margin: 0;
+            border: 5px solid black;
+        }
+    }
 `;
